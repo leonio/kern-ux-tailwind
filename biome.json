@@ -1,0 +1,19 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.6.4/schema.json",
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
+	},
+	"files": {
+		"includes": ["**", "!src/tokens.css", "!src/remap.css"]
+	},
+	"css": {
+		"parser": {
+			"tailwindDirectives": true
+		}
+	},
+	"linter": {
+		"enabled": true
+	}
+}

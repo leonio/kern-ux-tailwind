@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: npm
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Biome
+        run: npm run lint
+
+      - name: TypeScript
+        run: npm run typecheck
+
+      - name: Tests
+        run: npm test
+
+      - name: Build the Demo
+        run: npm run demo
+
+  # The peer range allows Tailwind 4.1 and later: compile the theme with the
+  # first release of each older minor too.
+  tailwind:
+    name: Tailwind ${{ matrix.tailwind }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        tailwind: ["4.1.0", "4.2.0"]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: npm
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Install Tailwind ${{ matrix.tailwind }}
+        run: npm install --no-save --no-audit --no-fund tailwindcss@${{ matrix.tailwind }} @tailwindcss/node@${{ matrix.tailwind }}
+
+      - name: Compile the Theme
+        run: npx vitest run test/theme.test.ts

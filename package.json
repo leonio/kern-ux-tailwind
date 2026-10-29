@@ -1,0 +1,67 @@
+{
+	"name": "@leonio/kern-ux-tailwind",
+	"version": "0.1.0",
+	"type": "module",
+	"description": "KERN-UX as a Tailwind CSS v4 theme: Tailwind utilities and components in KERN's colours, type, spacing, breakpoints and light and dark themes.",
+	"license": "EUPL-1.2",
+	"author": "Leon Ioannides <leonio@users.noreply.github.com>",
+	"homepage": "https://github.com/leonio/kern-ux-tailwind#readme",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/leonio/kern-ux-tailwind.git"
+	},
+	"bugs": {
+		"url": "https://github.com/leonio/kern-ux-tailwind/issues"
+	},
+	"keywords": [
+		"kern-ux",
+		"kern",
+		"tailwindcss",
+		"tailwind",
+		"theme",
+		"design-tokens",
+		"css"
+	],
+	"style": "./src/theme.css",
+	"exports": {
+		".": {
+			"style": "./src/theme.css",
+			"default": "./src/theme.css"
+		},
+		"./remap.css": "./src/remap.css",
+		"./package.json": "./package.json"
+	},
+	"files": [
+		"src/*.css"
+	],
+	"sideEffects": [
+		"*.css"
+	],
+	"publishConfig": {
+		"access": "public",
+		"provenance": true
+	},
+	"scripts": {
+		"tokens": "tsx scripts/generate.ts",
+		"demo": "tsx scripts/build-demo.ts",
+		"test": "vitest run",
+		"typecheck": "tsc --noEmit",
+		"lint": "biome ci .",
+		"format": "biome format --write ."
+	},
+	"peerDependencies": {
+		"@kern-ux/native": "~2.8.2",
+		"tailwindcss": "^4.1.0"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.6.4",
+		"@kern-ux/native": "2.8.2",
+		"@tailwindcss/cli": "^4.3.3",
+		"@tailwindcss/node": "^4.3.3",
+		"@types/node": "^24.19.2",
+		"tailwindcss": "^4.3.3",
+		"tsx": "^4.23.15",
+		"typescript": "^7.0.2",
+		"vitest": "^5.0.5"
+	}
+}

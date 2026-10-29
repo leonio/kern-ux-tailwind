@@ -1,0 +1,5 @@
+@import "tailwindcss" source("./");
+@import "@leonio/kern-ux-tailwind";
+
+/* Optional: KERN colours, radii and shadows for components that hard-code Tailwind's. */
+@import "@leonio/kern-ux-tailwind/remap.css";

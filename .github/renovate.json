@@ -1,0 +1,16 @@
+{
+	"extends": ["config:recommended", "schedule:weekly"],
+	"labels": ["dependencies"],
+	"packageRules": [
+		{
+			"description": "The compile tests need tailwindcss and @tailwindcss/node at the same version",
+			"groupName": "Tailwind CSS",
+			"matchPackageNames": ["tailwindcss", "/^@tailwindcss\\//"]
+		},
+		{
+			"description": "A KERN update needs npm run tokens and a look at the demo: never merge it unseen",
+			"matchPackageNames": ["@kern-ux/native"],
+			"automerge": false
+		}
+	]
+}
