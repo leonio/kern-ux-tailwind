@@ -19,6 +19,8 @@ The names shadcn/ui and most Tailwind component code use, on KERN's contextual t
 | `input`                                                                                            | `form-input-border-contextual`         |
 | `ring`                                                                                             | `action-focus-default-contextual`      |
 
+<!-- site:semantic-colours -->
+
 ## Every KERN colour
 
 Each KERN colour token `--kern-color-<name>` is the Tailwind colour `kern-<name>`:
@@ -37,6 +39,8 @@ Prefer the `-contextual` tokens and the semantic names above for anything that s
 
 KERN's palette steps are calibrated by contrast on white: every `-400` is 3:1, every `-500` 4.5:1, every `-600` 6:1 and every `-700` 8.5:1, whatever the hue.
 
+<!-- site:palette -->
+
 ## Type roles
 
 Each sets font size, line height and weight together, as KERN's type classes do. Override one with Tailwind's own utilities, for example `text-kern-body font-semibold`.
@@ -52,6 +56,8 @@ Each sets font size, line height and weight together, as KERN's type classes do.
 | `text-kern-heading-large`   | 26 / 32px          | 600    | 32 / 40px  |
 | `text-kern-heading-x-large` | 32 / 40px          | 500    | 48 / 56px  |
 | `text-kern-heading-display` | 48 / 56px          | 500    | 72 / 80px  |
+
+<!-- site:type-roles -->
 
 Tailwind's own sizes (`text-sm`, `text-base` …) stay as they are. KERN's smallest body text is 16px, so `text-sm` and `text-xs` are smaller than anything KERN uses.
 
@@ -79,6 +85,8 @@ Tailwind's spacing step is 4px, which is KERN's grid, so its numeric scale alrea
 | `p-kern-4x-large` | `--kern-metric-space-4x-large` | 56px  | `p-14`                |
 | `p-kern-5x-large` | `--kern-metric-space-5x-large` | 64px  | `p-16`                |
 
+<!-- site:spacing -->
+
 ## Radii and shadows
 
 | Utility                | KERN token                            | Value |
@@ -89,6 +97,8 @@ Tailwind's spacing step is 4px, which is KERN's grid, so its numeric scale alrea
 | `shadow-kern-low`      | `--kern-shadow-elevation-low`         |       |
 | `shadow-kern-default`  | `--kern-shadow-elevation-default`     |       |
 | `shadow-kern-high`     | `--kern-shadow-elevation-high`        |       |
+
+<!-- site:radii-shadows -->
 
 KERN's shadows set their own colour, so Tailwind's shadow colour utilities (`shadow-red-500`) don't apply to them.
 

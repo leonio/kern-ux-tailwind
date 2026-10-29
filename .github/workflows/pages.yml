@@ -1,7 +1,7 @@
-name: Demo
+name: Site
 
-# Publishes the demo (npm run demo) to GitHub Pages. Pages has to be set to
-# deploy from GitHub Actions once: Settings → Pages → Source.
+# Publishes the docs site and the demo (npm run site) to GitHub Pages. Pages
+# has to be set to deploy from GitHub Actions once: Settings → Pages → Source.
 
 on:
   push:
@@ -32,13 +32,13 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Build the Demo
-        run: npm run demo
+      - name: Build the Site
+        run: npm run site
 
       - name: Upload the Pages Artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: demo/dist
+          path: site/dist
 
   deploy:
     name: Deploy

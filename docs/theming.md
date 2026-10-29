@@ -15,10 +15,16 @@ KERN's theme comes from, in order of precedence:
 
 <!-- The whole page is dark -->
 <html lang="de" data-kern-theme="dark">
+```
 
-<!-- One dark section on any page -->
-<section data-kern-theme="dark" class="bg-background p-kern-large text-foreground">
-	<button class="bg-primary text-primary-foreground …">In KERN's dark action colour</button>
+One dark section, on any page:
+
+```html example
+<section data-kern-theme="dark" class="flex flex-col gap-kern-default rounded-kern-default bg-background p-kern-large text-foreground">
+	<p class="text-kern-body">A dark section</p>
+	<button type="button" class="min-h-12 rounded-kern-default bg-primary px-kern-large text-kern-label text-primary-foreground">
+		In KERN's dark action colour
+	</button>
 </section>
 ```
 

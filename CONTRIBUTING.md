@@ -7,8 +7,8 @@ npm ci
 npm test            # generated files, token names and the compiled theme
 npm run lint        # Biome
 npm run typecheck   # the scripts and tests
-npm run demo        # builds demo/dist; open demo/dist/index.html
-npm run screenshots # rebuilds the demo and writes docs/images/comparison-*.png
+npm run site        # builds the docs site and the demo into site/dist
+npm run screenshots # rebuilds the site and writes docs/images/comparison-*.png
 npm run tokens      # regenerates src/tokens.css and src/remap.css
 ```
 
@@ -63,8 +63,15 @@ npm can only set up trusted publishing for a package that exists, so the first v
 4. Create the `release` environment in the repository's settings, with yourself as a required reviewer.
 5. Run the Release workflow for that version: it finds the version live on npm, skips staging and creates the tag and the GitHub release.
 
-## The demo and the screenshots
+## The site and the screenshots
 
-`.github/workflows/pages.yml` publishes `demo/dist` to GitHub Pages on every push to `main`. It needs Pages set to deploy from GitHub Actions once: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+The site at https://leonio.github.io/kern-ux-tailwind/ is built with this package. `npm run site` renders `README.md` and `docs/*.md` with KERN's classes, adds the demo from `site/pages/demo.html`, and compiles `site/app.css` into `site/dist`; serve that folder to look at it. The code lives in `scripts/site.ts` and `scripts/build-site.ts`.
+
+- The Markdown stays the source: GitHub and npm show the same files. Links between them become links between the site's pages, and links to other files in the repo go to GitHub.
+- A code block marked `html example` renders live above its code on the site; GitHub shows it as an `html` block. The build fails if a class in an example has no CSS.
+- A `<!-- site:name -->` comment in `docs/utilities.md` is replaced by a live block on the site: swatches, the type roles, spacing, radii and shadows, read from the theme. GitHub doesn't show the comments.
+- The build fails on a link to a page, file or heading that doesn't exist.
+
+`.github/workflows/pages.yml` publishes `site/dist` to GitHub Pages on every push to `main`. It needs Pages set to deploy from GitHub Actions once: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
 
 The screenshots in the README and `docs/` come from the demo. After a change that shows in it, rerun `npm run screenshots` and commit the images. It needs a Chromium once: `npx playwright-core install chromium`, or set `CHROMIUM_PATH` to one you have.

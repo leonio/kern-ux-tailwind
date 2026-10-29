@@ -2,7 +2,7 @@
 
 [KERN-UX](https://www.kern-ux.de/) as a [Tailwind CSS](https://tailwindcss.com/) v4 theme. Tailwind's utilities, and Tailwind components you paste in, render in KERN's colours, fonts, spacing, radii, breakpoints and light and dark themes, next to KERN's own components.
 
-**[See the demo](https://leonio.github.io/kern-ux-tailwind/)**: KERN's components, Tailwind components on KERN's tokens and remapped Tailwind markup side by side, in light and dark.
+**[Read the docs](https://leonio.github.io/kern-ux-tailwind/)**, a site built with this package, or **[see the demo](https://leonio.github.io/kern-ux-tailwind/demo/)**: KERN's components, Tailwind components on KERN's tokens and remapped Tailwind markup side by side, in light and dark.
 
 ```bash
 npm install @leonio/kern-ux-tailwind @kern-ux/native tailwindcss
@@ -33,13 +33,13 @@ Each row shows a component three ways. The button row's markup, from left to rig
 
 **KERN**, with its own classes:
 
-```html
+```html example
 <button type="button" class="kern-btn kern-btn--primary"><span class="kern-label">Submit</span></button>
 ```
 
 **Tailwind on KERN's tokens**, as you'd write it with this theme:
 
-```html
+```html example
 <button type="button" class="inline-flex min-h-12 items-center rounded-kern-default bg-primary px-kern-large text-kern-label text-primary-foreground hover:bg-kern-action-state-indicator-shade-hover focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-ring">
   Submit
 </button>
@@ -47,13 +47,13 @@ Each row shows a component three ways. The button row's markup, from left to rig
 
 **Tailwind's palette, remapped**: markup as Tailwind component sites write it, with `remap.css`. Its `indigo-600` becomes KERN's `darkblue-600` and its `rounded-md` KERN's 4px radius, while its size stays Tailwind's:
 
-```html
+```html example
 <button type="button" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-400 dark:text-gray-950">
   Submit
 </button>
 ```
 
-The markup of every row is in [`demo/index.html`](https://github.com/leonio/kern-ux-tailwind/blob/main/demo/index.html).
+The markup of every row is in [`site/pages/demo.html`](https://github.com/leonio/kern-ux-tailwind/blob/main/site/pages/demo.html).
 
 ## Documentation
 

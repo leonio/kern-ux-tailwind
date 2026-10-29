@@ -34,8 +34,8 @@ jobs:
       - name: Tests
         run: npm test
 
-      - name: Build the Demo
-        run: npm run demo
+      - name: Build the Site
+        run: npm run site
 
   # The peer range allows Tailwind 4.1 and later: compile the theme with the
   # first release of each older minor too.

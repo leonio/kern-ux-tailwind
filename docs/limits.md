@@ -31,6 +31,10 @@ KERN's components render the same with and without Tailwind's preflight. The the
 
 Preflight still changes markup that has no KERN classes. It removes the body margin, unstyles bare headings and lists, and sets `line-height: 1.5` on the root. To keep the browser's defaults there, [leave preflight out](getting-started.md#without-preflight).
 
+## A build warning about `@charset`
+
+Builds that minify the CSS, such as `vite build` or the Tailwind CLI with `--minify`, warn `Unknown at rule: @charset`. KERN's stylesheet starts with `@charset "UTF-8"`, which is only allowed at the very start of a file, and the theme imports that stylesheet into Tailwind's `base` layer. The warning is harmless: browsers ignore the rule there, and KERN's CSS works the same.
+
 ## Fira Mono
 
 `@kern-ux/native` doesn't ship Fira Mono, so `font-mono` falls back to the system's monospace font unless you load it.
