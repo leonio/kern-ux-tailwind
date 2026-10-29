@@ -22,6 +22,39 @@ npm install @leonio/kern-ux-tailwind @kern-ux/native tailwindcss
 
 This package is a theme: it doesn't contain KERN. `@kern-ux/native` is a peer dependency that your project installs, and the theme imports its stylesheet at build time, into Tailwind's `base` layer after preflight. So KERN's components (`kern-btn`, `kern-alert` …) keep their look, and Tailwind's utilities still override them.
 
+## What it looks like
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/leonio/kern-ux-tailwind/main/docs/images/comparison-dark.png">
+  <img alt="Buttons, alerts, badges, text inputs and cards, each three ways: KERN's components, Tailwind utilities on KERN's tokens, and Tailwind palette markup with remap.css" src="https://raw.githubusercontent.com/leonio/kern-ux-tailwind/main/docs/images/comparison-light.png">
+</picture>
+
+Each row shows a component three ways. The button row's markup, from left to right:
+
+**KERN**, with its own classes:
+
+```html
+<button type="button" class="kern-btn kern-btn--primary"><span class="kern-label">Submit</span></button>
+```
+
+**Tailwind on KERN's tokens**, as you'd write it with this theme:
+
+```html
+<button type="button" class="inline-flex min-h-12 items-center rounded-kern-default bg-primary px-kern-large text-kern-label text-primary-foreground hover:bg-kern-action-state-indicator-shade-hover focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-ring">
+  Submit
+</button>
+```
+
+**Tailwind's palette, remapped**: markup as Tailwind component sites write it, with `remap.css`. Its `indigo-600` becomes KERN's `darkblue-600` and its `rounded-md` KERN's 4px radius, while its size stays Tailwind's:
+
+```html
+<button type="button" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-400 dark:text-gray-950">
+  Submit
+</button>
+```
+
+The markup of every row is in [`demo/index.html`](https://github.com/leonio/kern-ux-tailwind/blob/main/demo/index.html).
+
 ## Documentation
 
 - **[Getting started](docs/getting-started.md)**: install, set up with Vite, PostCSS or the Tailwind CLI, and load KERN's font.
@@ -56,7 +89,9 @@ Choose theirs for a KERN-only vocabulary, and this one to use Tailwind component
 
 ## Versions
 
-Tested with `@kern-ux/native` 2.8.2 and Tailwind CSS 4.1 to 4.3. KERN has renamed tokens between releases, so the peer range on `@kern-ux/native` stays within one minor version until the next is checked.
+Tested with `@kern-ux/native` 2.8.2 and Tailwind CSS 4.1 to 4.3. KERN has renamed tokens between releases, so the peer range on `@kern-ux/native` only includes KERN versions the theme was checked with.
+
+The package follows semantic versioning; [what counts as a breaking change](CONTRIBUTING.md#versioning) is in CONTRIBUTING.md.
 
 ## License
 

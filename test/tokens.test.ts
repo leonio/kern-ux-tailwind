@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
+import semver from "semver";
 import { describe, expect, it } from "vitest";
 
 import {
@@ -28,14 +29,10 @@ describe("the checked-in src/", () => {
 	);
 
 	it("is tested with a KERN version in the package's peer range", () => {
+		// The tests vouch for the KERN they run with: the range must include it.
 		const range: string = JSON.parse(checkedIn("../package.json"))
 			.peerDependencies["@kern-ux/native"];
-		// KERN renames tokens between releases, so the range stays within one minor.
-		const [, major, minor, patch] = /^~(\d+)\.(\d+)\.(\d+)$/.exec(range) ?? [];
-		expect(range).toMatch(/^~\d+\.\d+\.\d+$/);
-		const [vMajor, vMinor, vPatch] = sources.kernVersion.split(".").map(Number);
-		expect([vMajor, vMinor]).toEqual([Number(major), Number(minor)]);
-		expect(vPatch).toBeGreaterThanOrEqual(Number(patch));
+		expect(semver.satisfies(sources.kernVersion, range)).toBe(true);
 	});
 });
 

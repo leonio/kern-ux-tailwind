@@ -8,6 +8,7 @@ npm test            # generated files, token names and the compiled theme
 npm run lint        # Biome
 npm run typecheck   # the scripts and tests
 npm run demo        # builds demo/dist; open demo/dist/index.html
+npm run screenshots # rebuilds the demo and writes docs/images/comparison-*.png
 npm run tokens      # regenerates src/tokens.css and src/remap.css
 ```
 
@@ -24,8 +25,22 @@ After an update of `@kern-ux/native` or `tailwindcss`:
 
 1. Run `npm run tokens` and look at the diff of `src/tokens.css` and `src/remap.css`.
 2. Run `npm test`. A token that `src/theme.css` reads and KERN no longer defines fails the token test.
-3. For a new KERN minor version, check the demo, then widen the peer range on `@kern-ux/native` to it. The token test requires the installed KERN to be in that range.
+3. For a new KERN minor version, check the demo, then update the peer range on `@kern-ux/native`; the token test requires the installed KERN to be in it.
+   - If no token the theme already reads was renamed or removed, widen the range, for example from `~2.8.2` to `>=2.8.2 <2.10.0`. That's a minor release.
+   - If the theme had to change for the new KERN, it no longer works with the old one: move the range to the new minor alone, for example `~2.9.0`. That's a major release.
 4. For a new Tailwind palette family, the generator fails until you add it to `FAMILIES` in `scripts/tokens.ts`.
+
+## Versioning
+
+The package follows [semantic versioning](https://semver.org/). Its API is its class names and what each resolves to:
+
+| Release | When                                                                                                                                                                                                                |
+| ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Major   | A utility is renamed or removed, such as `text-kern-body`; a utility resolves to something else, such as `bg-primary` to another KERN token; a breakpoint changes; a KERN or Tailwind version leaves the peer range |
+| Minor   | New utilities or files; the peer range widens to a new KERN or Tailwind version, with every existing utility unchanged                                                                                              |
+| Patch   | A utility made to resolve as documented; documentation                                                                                                                                                              |
+
+Below 1.0.0, a breaking change goes out as a minor release instead, as semantic versioning allows for 0.x versions. 1.0.0 follows once a project depends on the package in production.
 
 ## Releasing
 
@@ -48,6 +63,8 @@ npm can only set up trusted publishing for a package that exists, so the first v
 4. Create the `release` environment in the repository's settings, with yourself as a required reviewer.
 5. Run the Release workflow for that version: it finds the version live on npm, skips staging and creates the tag and the GitHub release.
 
-## The demo
+## The demo and the screenshots
 
 `.github/workflows/pages.yml` publishes `demo/dist` to GitHub Pages on every push to `main`. It needs Pages set to deploy from GitHub Actions once: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+
+The screenshots in the README and `docs/` come from the demo. After a change that shows in it, rerun `npm run screenshots` and commit the images. It needs a Chromium once: `npx playwright-core install chromium`, or set `CHROMIUM_PATH` to one you have.
