@@ -62,6 +62,10 @@ try {
 			document.documentElement.dataset.kernTheme = name;
 		}, theme);
 		await page.evaluate(() => document.fonts.ready);
+		// The components only: the demo's "Markup" disclosures stay out.
+		await page.addStyleTag({
+			content: "details[data-markup] { display: none; }",
+		});
 
 		const box = async (selector: string) => {
 			const found = await page.locator(selector).boundingBox();

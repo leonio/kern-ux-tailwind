@@ -70,6 +70,8 @@ The site at https://leonio.github.io/kern-ux-tailwind/ is built with this packag
 - The Markdown stays the source: GitHub and npm show the same files. Links between them become links between the site's pages, and links to other files in the repo go to GitHub.
 - A code block marked `html example` renders live above its code on the site; GitHub shows it as an `html` block. The build fails if a class in an example has no CSS.
 - A `<!-- site:name -->` comment in `docs/utilities.md` is replaced by a live block on the site: swatches, the type roles, spacing, radii and shadows, read from the theme. GitHub doesn't show the comments.
+- In `site/pages/demo.html`, markup between `<!-- markup Label -->` and `<!-- /markup -->` renders as it is, and `<!-- markup-panel -->` after a row becomes a full-width "Markup" disclosure with the code of each piece under its label. The code shown is always what renders, and the build fails on markup no panel follows.
+- Code blocks get a bar with their language and a copy button, which appears where the browser can copy. They're highlighted at build time with Shiki, its colours replaced by KERN's semantic ones (`SYNTAX` in `scripts/site.ts`), so they follow light, dark and the surface level, at 4.5:1 or more on the code's background. The build fails on a Shiki colour `SYNTAX` doesn't map.
 - The build fails on a link to a page, file or heading that doesn't exist.
 
 `.github/workflows/pages.yml` publishes `site/dist` to GitHub Pages on every push to `main`. It needs Pages set to deploy from GitHub Actions once: **Settings → Pages → Build and deployment → Source: GitHub Actions**.

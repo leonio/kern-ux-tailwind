@@ -7,6 +7,11 @@ import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import MarkdownIt from "markdown-it";
+import {
+	type BundledLanguage,
+	createCssVariablesTheme,
+	createHighlighter,
+} from "shiki";
 
 export const ROOT = fileURLToPath(new URL("../", import.meta.url));
 export const DIST = path.join(ROOT, "site/dist");
@@ -97,9 +102,125 @@ const HEADINGS: Record<string, string> = {
 	h3: "kern-heading-medium mt-kern-large",
 	h4: "kern-heading-small mt-kern-default",
 };
+// Tabs two wide: the demo's markup is indented with tabs.
 const CODE_BLOCK =
-	"overflow-x-auto rounded-kern-default bg-muted p-kern-default font-mono text-kern-body-small";
+	"overflow-x-auto p-kern-default font-mono text-kern-body-small [tab-size:2]";
 const INLINE_CODE = "rounded-kern-small bg-muted px-1 font-mono text-[0.9em]";
+
+/** The languages code blocks are highlighted in; others stay plain. */
+const LANGUAGES: BundledLanguage[] = ["html", "css", "js", "bash"];
+
+/**
+ * Shiki's token colours as KERN's semantic colours, written into each token
+ * so they follow the theme and the surface level where the code is. On the
+ * code blocks' surface each has at least 4.5:1 contrast in light and dark.
+ * Shiki's foreground and punctuation keep the block's own text colour.
+ */
+export const SYNTAX: Record<string, string> = {
+	"token-keyword": "action-default-contextual",
+	"token-link": "action-default-contextual",
+	"token-function": "action-visited-contextual",
+	"token-string": "feedback-success-contextual",
+	"token-string-expression": "feedback-success-contextual",
+	"token-inserted": "feedback-success-contextual",
+	"token-constant": "feedback-warning-contextual",
+	"token-parameter": "feedback-info-contextual",
+	"token-deleted": "feedback-danger-contextual",
+	"token-comment": "layout-text-muted-contextual",
+};
+const PLAIN = new Set(["foreground", "token-punctuation"]);
+
+/** Code as HTML for inside a <code>, highlighted or escaped. */
+export type Highlight = (code: string, language: string) => string;
+
+export const plain: Highlight = (code) => escapeHtml(code);
+
+/**
+ * Highlights with Shiki's CSS-variables theme, its variables replaced by
+ * KERN's. Fails on a token colour SYNTAX doesn't map.
+ */
+export async function createHighlight(): Promise<Highlight> {
+	const highlighter = await createHighlighter({
+		themes: [
+			createCssVariablesTheme({
+				name: "kern",
+				variablePrefix: "--shiki-",
+				variableDefaults: {},
+				fontStyle: true,
+			}),
+		],
+		langs: LANGUAGES,
+	});
+	return (code, language) => {
+		const lang = LANGUAGES.find((known) => known === language);
+		if (!lang) return escapeHtml(code);
+		const { tokens } = highlighter.codeToTokens(code, { lang, theme: "kern" });
+		return tokens
+			.map((line) =>
+				line
+					.map((token) => {
+						const text = escapeHtml(token.content);
+						const name =
+							/^var\(--shiki-([\w-]+)\)$/.exec(token.color ?? "")?.[1] ??
+							"foreground";
+						const colour = SYNTAX[name];
+						if (!colour && !PLAIN.has(name)) {
+							throw new Error(`Shiki's ${name} has no KERN colour in SYNTAX.`);
+						}
+						// Shiki's font style is bit flags; 1 is italic.
+						const italic = ((token.fontStyle ?? 0) & 1) === 1;
+						const style = [
+							colour ? `color:var(--kern-color-${colour})` : "",
+							italic ? "font-style:italic" : "",
+						]
+							.filter(Boolean)
+							.join(";");
+						return style ? `<span style="${style}">${text}</span>` : text;
+					})
+					.join(""),
+			)
+			.join("\n");
+	};
+}
+
+/** The names code blocks show for their language. */
+const LANGUAGE_NAMES: Record<string, string> = {
+	html: "HTML",
+	css: "CSS",
+	js: "JavaScript",
+	bash: "Shell",
+};
+
+/**
+ * A code block under a bar with its language and a copy button, so the
+ * button never covers the code. The button stays hidden until the layout's
+ * script finds the browser can copy.
+ */
+function codeBlock(
+	html: string,
+	language: string,
+	classes = "",
+	label = LANGUAGE_NAMES[language] ?? "",
+): string {
+	return `<div class="flex flex-col overflow-hidden rounded-kern-default bg-muted${classes ? ` ${classes}` : ""}" data-code>
+<div class="flex min-h-10 items-center justify-between gap-kern-small border-b border-border py-1 pr-1 pl-kern-default"><span class="text-kern-body-small text-muted-foreground">${escapeHtml(label)}</span><button type="button" class="kern-btn kern-btn--tertiary kern-btn--x-small m-0" data-copy hidden><span class="kern-icon kern-icon--content-copy" aria-hidden="true"></span><span class="kern-label kern-sr-only">Copy the code</span></button></div>
+<pre class="${CODE_BLOCK}"><code>${html}</code></pre>
+</div>`;
+}
+
+/** Text without the indentation its lines share and the blank lines around it. */
+export function dedent(text: string): string {
+	const lines = text
+		.replace(/^(?:[\t ]*\n)+/, "")
+		.trimEnd()
+		.split("\n");
+	const indent = Math.min(
+		...lines
+			.filter((line) => line.trim())
+			.map((line) => /^[\t ]*/.exec(line)?.[0].length ?? 0),
+	);
+	return lines.map((line) => line.slice(indent)).join("\n");
+}
 
 export type Rendered = {
 	html: string;
@@ -114,7 +235,10 @@ export type Rendered = {
  * A code block marked `html example` renders twice: as the live HTML and as
  * its code. GitHub shows it as an html code block.
  */
-export function renderMarkdown(source: string): Rendered {
+export function renderMarkdown(
+	source: string,
+	highlight: Highlight = plain,
+): Rendered {
 	const md = MarkdownIt({ html: true });
 	const slug = slugger();
 	const examples: string[] = [];
@@ -163,14 +287,15 @@ export function renderMarkdown(source: string): Rendered {
 		`<code class="${INLINE_CODE}">${md.utils.escapeHtml(tokens[idx].content)}</code>`;
 	rules.fence = (tokens, idx) => {
 		const { info, content } = tokens[idx];
-		const code = md.utils.escapeHtml(content);
+		const [language = ""] = info.trim().split(/\s+/);
+		const code = highlight(content, language);
 		if (info.trim() !== "html example") {
-			return `<pre class="${CODE_BLOCK}"><code>${code}</code></pre>\n`;
+			return `${codeBlock(code, language)}\n`;
 		}
 		examples.push(content);
 		return `<figure class="flex flex-col overflow-hidden rounded-kern-default border border-border">
 <div class="flex flex-wrap items-center gap-kern-default p-kern-large">${content}</div>
-<pre class="${CODE_BLOCK} rounded-none border-t border-border"><code>${code}</code></pre>
+${codeBlock(code, language, "rounded-none border-t border-border")}
 </figure>\n`;
 	};
 	const image = rules.image;
@@ -185,11 +310,44 @@ export function renderMarkdown(source: string): Rendered {
 	return { html: md.render(source), title, examples };
 }
 
-/** An HTML page fragment, such as the demo: its h1 is the title. */
-export function renderFragment(source: string): Rendered {
+/**
+ * An HTML page fragment, such as the demo: its h1 is the title. Markup
+ * between `<!-- markup Label -->` and `<!-- /markup -->` stays as it is, and
+ * `<!-- markup-panel -->` becomes a full-width "Markup" disclosure with the
+ * code of each piece since the last panel, under its label.
+ */
+export function renderFragment(
+	source: string,
+	highlight: Highlight = plain,
+): Rendered {
 	const h1 = /<h1[^>]*>([\s\S]*?)<\/h1>/.exec(source);
 	const title = h1 ? h1[1].replace(/<[^>]+>/g, "").trim() : "";
-	return { html: source, title, examples: [] };
+	let pieces: { label: string; code: string }[] = [];
+	const html = source.replace(
+		/<!-- markup (.+?) -->([\s\S]*?)<!-- \/markup -->|<!-- markup-panel -->/g,
+		(_, label?: string, markup?: string) => {
+			if (label !== undefined && markup !== undefined) {
+				pieces.push({ label, code: dedent(markup) });
+				return markup;
+			}
+			const blocks = pieces
+				.map(({ label, code }) =>
+					codeBlock(highlight(code, "html"), "html", "", label),
+				)
+				.join("\n");
+			pieces = [];
+			return `<details class="kern-details" data-markup>
+<summary class="kern-details__header"><span class="kern-title kern-title--small">Markup</span></summary>
+<div class="kern-details__body flex flex-col gap-kern-default pt-kern-small pl-0">${blocks}</div>
+</details>`;
+		},
+	);
+	if (pieces.length > 0) {
+		throw new Error(
+			`Markup for ${pieces.map((piece) => piece.label).join(", ")} has no <!-- markup-panel --> after it.`,
+		);
+	}
+	return { html, title, examples: [] };
 }
 
 /** The path from one file in site/dist to another. */
@@ -312,6 +470,7 @@ export function layout(page: Page, title: string, body: string): string {
 		<main id="main" class="mx-auto flex ${page.wide ? "max-w-7xl" : "max-w-3xl"} flex-col gap-kern-default px-kern-default py-kern-x-large">
 ${body}
 		</main>
+		<p class="sr-only" id="copy-status" aria-live="polite"></p>
 		<footer class="border-t border-border">
 			<p class="mx-auto max-w-7xl px-kern-default py-kern-large text-kern-body-small text-muted-foreground">
 				An independent project, not a site of the KERN team or of any government. Built with
@@ -330,6 +489,31 @@ ${body}
 					else localStorage.setItem("kern-theme", theme);
 				} catch {}
 			});
+
+			// Copy buttons appear only where the browser can copy (a secure context).
+			const copyStatus = document.getElementById("copy-status");
+			if (navigator.clipboard) {
+				for (const button of document.querySelectorAll("[data-copy]")) {
+					const icon = button.querySelector(".kern-icon");
+					const label = button.querySelector(".kern-label");
+					button.hidden = false;
+					button.addEventListener("click", async () => {
+						try {
+							await navigator.clipboard.writeText(button.closest("[data-code]").querySelector("code").textContent);
+						} catch {
+							return;
+						}
+						icon.classList.replace("kern-icon--content-copy", "kern-icon--check");
+						label.textContent = "Copied";
+						copyStatus.textContent = "Copied the code";
+						setTimeout(() => {
+							icon.classList.replace("kern-icon--check", "kern-icon--content-copy");
+							label.textContent = "Copy the code";
+							copyStatus.textContent = "";
+						}, 2000);
+					});
+				}
+			}
 		</script>
 	</body>
 </html>
