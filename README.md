@@ -57,11 +57,11 @@ The markup of every row is in [`site/pages/demo.html`](https://github.com/leonio
 
 ## Documentation
 
-- **[Getting started](docs/getting-started.md)**: install, set up with Vite, PostCSS or the Tailwind CLI, and load KERN's font.
-- **[Utilities](docs/utilities.md)**: every colour, type role, spacing step, radius, shadow and breakpoint the theme adds or changes.
-- **[Light, dark and sections](docs/theming.md)**: how the utilities follow KERN's themes, and what `dark:` matches.
-- **[Tailwind components](docs/tailwind-components.md)**: shadcn/ui and other components with semantic colour names, and `remap.css` for markup that hard-codes Tailwind's palette.
-- **[Limits](docs/limits.md)**: what the theme doesn't change, and the known issues with workarounds.
+- **[Getting started](https://leonio.github.io/kern-ux-tailwind/docs/getting-started.html)**: install, set up with Vite, PostCSS or the Tailwind CLI, and load KERN's font.
+- **[Utilities](https://leonio.github.io/kern-ux-tailwind/docs/utilities.html)**: every colour, type role, spacing step, radius, shadow and breakpoint the theme adds or changes.
+- **[Light, dark and sections](https://leonio.github.io/kern-ux-tailwind/docs/theming.html)**: how the utilities follow KERN's themes, and what `dark:` matches.
+- **[Tailwind components](https://leonio.github.io/kern-ux-tailwind/docs/tailwind-components.html)**: shadcn/ui and other components with semantic colour names, and `remap.css` for markup that hard-codes Tailwind's palette.
+- **[Limits](https://leonio.github.io/kern-ux-tailwind/docs/limits.html)**: what the theme doesn't change, and the known issues with workarounds.
 
 ## What you get
 
@@ -91,8 +91,8 @@ Choose theirs for a KERN-only vocabulary, and this one to use Tailwind component
 
 Tested with `@kern-ux/native` 2.8.2 and Tailwind CSS 4.1 to 4.3. KERN has renamed tokens between releases, so the peer range on `@kern-ux/native` only includes KERN versions the theme was checked with.
 
-The package follows semantic versioning; [what counts as a breaking change](CONTRIBUTING.md#versioning) is in CONTRIBUTING.md.
+The package follows semantic versioning; [what counts as a breaking change](https://github.com/leonio/kern-ux-tailwind/blob/main/CONTRIBUTING.md#versioning) is in CONTRIBUTING.md.
 
 ## License
 
-[EUPL-1.2](LICENSE.md). KERN itself is published by the KERN team as `@kern-ux/native` under its own licence; this package doesn't include it.
+[EUPL-1.2](https://github.com/leonio/kern-ux-tailwind/blob/main/LICENSE.md). KERN itself is published by the KERN team as `@kern-ux/native` under its own licence; this package doesn't include it.
