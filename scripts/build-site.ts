@@ -20,6 +20,7 @@ import path from "node:path";
 import {
 	ASSET_FOLDERS,
 	brokenLinks,
+	createHighlight,
 	DIST,
 	generatedBlocks,
 	layout,
@@ -41,13 +42,14 @@ rmSync(DIST, { recursive: true, force: true });
 const published = publishedPaths();
 const blocks = generatedBlocks(read("src/theme.css"), read("src/tokens.css"));
 const examples: string[] = [];
+const highlight = await createHighlight();
 
 // The pages first: Tailwind scans them for the classes to generate.
 for (const page of PAGES) {
 	const source = read(page.source);
 	const rendered = page.source.endsWith(".md")
-		? renderMarkdown(source)
-		: renderFragment(source);
+		? renderMarkdown(source, highlight)
+		: renderFragment(source, highlight);
 	examples.push(...rendered.examples);
 	const body = rewriteLinks(rendered.html, page, published).replace(
 		/<!-- site:([\w-]+) -->/g,
