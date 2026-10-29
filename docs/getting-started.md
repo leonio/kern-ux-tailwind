@@ -86,13 +86,13 @@ KERN sets Fira Sans; `@kern-ux/native` ships it in `dist/fonts/`.
 
 ## Check it works
 
-```html
-<body class="bg-background text-foreground">
-	<button class="kern-btn kern-btn--primary"><span class="kern-label">KERN</span></button>
-	<button class="min-h-12 rounded-kern-default bg-primary px-kern-large text-kern-label text-primary-foreground">
-		Tailwind
-	</button>
-</body>
+Give `<body>` the classes `bg-background text-foreground`, then add a KERN button and one built with Tailwind:
+
+```html example
+<button type="button" class="kern-btn kern-btn--primary"><span class="kern-label">KERN</span></button>
+<button type="button" class="min-h-12 rounded-kern-default bg-primary px-kern-large text-kern-label text-primary-foreground">
+	Tailwind
+</button>
 ```
 
 Both buttons should have the same blue, and both should turn light blue with `data-kern-theme="dark"` on `<html>`.

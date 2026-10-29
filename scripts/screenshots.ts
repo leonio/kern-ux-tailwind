@@ -1,6 +1,6 @@
 /**
  * Writes docs/images/comparison-light.png and comparison-dark.png from the
- * built demo: KERN's components, Tailwind on KERN's tokens and remapped
+ * demo page of the built site: KERN's components, Tailwind on KERN's tokens and remapped
  * Tailwind markup, row by row. Run it after changing the theme or the demo,
  * and commit the images.
  *
@@ -17,14 +17,14 @@ import { fileURLToPath } from "node:url";
 import { chromium } from "playwright-core";
 
 const ROOT = fileURLToPath(new URL("../", import.meta.url));
-const DIST = path.join(ROOT, "demo/dist");
+const DIST = path.join(ROOT, "site/dist");
 const TYPES: Record<string, string> = {
 	".html": "text/html",
 	".css": "text/css",
 	".woff2": "font/woff2",
 };
 
-// Chromium doesn't load fonts on a file:// page, so the demo is served.
+// Chromium doesn't load fonts on a file:// page, so the site is served.
 const server = createServer(async (request, response) => {
 	const { pathname } = new URL(request.url ?? "/", "http://localhost");
 	const file = path.join(
@@ -57,7 +57,7 @@ try {
 		const page = await browser.newPage({
 			viewport: { width: 1280, height: 900 },
 		});
-		await page.goto(`http://127.0.0.1:${port}/`);
+		await page.goto(`http://127.0.0.1:${port}/demo/`);
 		await page.evaluate((name) => {
 			document.documentElement.dataset.kernTheme = name;
 		}, theme);
@@ -68,19 +68,18 @@ try {
 			if (!found) throw new Error(`The demo has no ${selector}.`);
 			return found;
 		};
-		// From the button row to the card row, with the page's own margins.
+		// From the button row to the card row, with a margin around them.
 		const first = await box("section[aria-labelledby=buttons]");
 		const last = await box("section[aria-labelledby=cards]");
-		const main = await box("main");
 		const margin = 24;
 		const file = `docs/images/comparison-${theme}.png`;
 		await page.screenshot({
 			path: path.join(ROOT, file),
 			fullPage: true,
 			clip: {
-				x: main.x + 16 - margin,
+				x: first.x - margin,
 				y: first.y - margin,
-				width: main.width - 32 + 2 * margin,
+				width: first.width + 2 * margin,
 				height: last.y + last.height - first.y + 2 * margin,
 			},
 		});

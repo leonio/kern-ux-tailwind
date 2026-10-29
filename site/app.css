@@ -1,0 +1,11 @@
+/*
+ * The site's stylesheet, written the way the docs tell a project to: Tailwind,
+ * then the theme by its package name, then remap.css for the demo's pasted
+ * markup. Tailwind scans the generated pages, which `npm run site` writes to
+ * site/dist before it compiles this file.
+ */
+@import "tailwindcss" source(none);
+@import "@leonio/kern-ux-tailwind";
+@import "@leonio/kern-ux-tailwind/remap.css";
+
+@source "./dist";

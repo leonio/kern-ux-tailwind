@@ -43,8 +43,8 @@
 	},
 	"scripts": {
 		"tokens": "tsx scripts/generate.ts",
-		"demo": "tsx scripts/build-demo.ts",
-		"screenshots": "npm run demo && tsx scripts/screenshots.ts",
+		"site": "tsx scripts/build-site.ts",
+		"screenshots": "npm run site && tsx scripts/screenshots.ts",
 		"test": "vitest run",
 		"typecheck": "tsc --noEmit",
 		"lint": "biome ci .",
@@ -61,6 +61,7 @@
 		"@tailwindcss/node": "^4.3.3",
 		"@types/node": "^24.19.2",
 		"@types/semver": "^7.8.0",
+		"markdown-it": "^15.0.3",
 		"playwright-core": "^1.64.1",
 		"semver": "^7.8.5",
 		"tailwindcss": "^4.3.3",
