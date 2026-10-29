@@ -37,4 +37,4 @@ Preflight still changes markup that has no KERN classes. It removes the body mar
 
 ## KERN versions
 
-KERN has renamed tokens between releases, for example `--kern-typography-font-size-static-small` to `--kern-typography-font-size-small-static`. A renamed token would make the utilities that read it resolve to nothing, so each release of this package is checked against one KERN minor version, and its peer range allows only that one.
+KERN has renamed tokens between releases, for example `--kern-typography-font-size-static-small` to `--kern-typography-font-size-small-static`. A renamed token would make the utilities that read it resolve to nothing, so the peer range on `@kern-ux/native` only includes KERN versions the package was checked with, and npm reports a peer dependency conflict for any other. A newer KERN gets into the range with a release, once it's checked.

@@ -2,6 +2,10 @@
 
 Tailwind itself has no components; the component sets built on it name colours in one of two ways, and the theme handles both.
 
+![Buttons, alerts, badges, text inputs and cards, each three ways: KERN's components, Tailwind utilities on KERN's tokens, and Tailwind palette markup with remap.css](images/comparison-light.png)
+
+From left to right: KERN's components, Tailwind utilities on KERN's tokens, and Tailwind palette markup with `remap.css`. The same rows [in the dark theme](images/comparison-dark.png); their markup is in [`demo/index.html`](../demo/index.html).
+
 ## Semantic names
 
 shadcn/ui, and the many sets built like it, colour components with semantic names: `bg-primary text-primary-foreground`, `text-muted-foreground`, `border-input`, `ring-ring/50`. The theme defines these names on KERN's tokens ([the list](utilities.md#semantic-colours)), so such components render in KERN's colours, in light and dark, without changes.
