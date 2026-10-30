@@ -34,10 +34,9 @@
 			"enabled": false
 		},
 		{
-			"description": "A KERN update needs npm run tokens and a look at the demo (CONTRIBUTING.md, Updating KERN or Tailwind): its own pull request, never merged unseen",
+			"description": "KERN updates come from the weekly KERN workflow instead, as an issue with what the new version changes (CONTRIBUTING.md, Updating KERN or Tailwind)",
 			"matchPackageNames": ["@kern-ux/native"],
-			"groupName": null,
-			"automerge": false
+			"enabled": false
 		}
 	]
 }
