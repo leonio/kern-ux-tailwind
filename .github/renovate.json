@@ -1,16 +1,42 @@
 {
-	"extends": ["config:recommended", "schedule:weekly"],
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"extends": [
+		"config:best-practices",
+		"schedule:weekly",
+		"customManagers:biomeVersions"
+	],
 	"labels": ["dependencies"],
+	"constraints": {
+		"npm": "^11"
+	},
 	"packageRules": [
 		{
-			"description": "The compile tests need tailwindcss and @tailwindcss/node at the same version",
-			"groupName": "Tailwind CSS",
-			"matchPackageNames": ["tailwindcss", "/^@tailwindcss\\//"]
+			"description": "One pull request a week for the tools' minor and patch updates",
+			"matchDatasources": ["npm"],
+			"matchUpdateTypes": ["minor", "patch"],
+			"groupName": "dev dependencies"
 		},
 		{
-			"description": "A KERN update needs npm run tokens and a look at the demo: never merge it unseen",
+			"description": "The compile tests need tailwindcss and @tailwindcss/node at the same version, and a new palette needs npm run tokens",
+			"groupName": "Tailwind CSS",
+			"matchPackageNames": ["tailwindcss", "/^@tailwindcss\\//"],
+			"matchUpdateTypes": ["major", "minor", "patch"]
+		},
+		{
+			"description": "CI's Node version and its types move together",
+			"groupName": "Node.js",
+			"matchPackageNames": ["node", "@types/node"],
+			"matchUpdateTypes": ["major"]
+		},
+		{
+			"description": "The peer ranges are the versions the package is checked with, and changing one is a release (CONTRIBUTING.md, Versioning), so never automatically",
+			"matchDepTypes": ["peerDependencies"],
+			"enabled": false
+		},
+		{
+			"description": "KERN updates come from the weekly KERN workflow instead, as an issue with what the new version changes (CONTRIBUTING.md, Updating KERN or Tailwind)",
 			"matchPackageNames": ["@kern-ux/native"],
-			"automerge": false
+			"enabled": false
 		}
 	]
 }
