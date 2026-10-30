@@ -21,13 +21,18 @@ CI runs both, and runs `theme.test.ts` again with Tailwind 4.1.0 and 4.2.0, the 
 
 ## Dependency updates
 
-[Renovate](https://github.com/apps/renovate) (`.github/renovate.json`) looks for updates early every Monday (UTC) and opens the pull requests: one for the tools' minor and patch updates, one for Tailwind, one for KERN, one for each major update, and one that refreshes `package-lock.json`. It covers the npm devDependencies, the GitHub Actions in `.github/workflows/`, CI's Node version and the schema version in `biome.json`. It waits three days after an npm release, pins the devDependencies and the actions' digests, and writes the lockfile with npm 11. It leaves the peer ranges alone: changing one is a release. Its Dependency Dashboard issue lists what's pending. It runs as the Renovate GitHub App, installed on the repository.
+Two jobs look for updates early every Monday (UTC):
 
-A KERN or Tailwind pull request is never merged unseen: go through the steps below on its branch first.
+- **Renovate** (`.github/renovate.json`) opens the pull requests: one for the tools' minor and patch updates, one for Tailwind, one for each major update, and one that refreshes `package-lock.json`. It covers the npm devDependencies, the GitHub Actions in `.github/workflows/`, CI's Node version and the schema version in `biome.json`. It waits three days after an npm release, pins the devDependencies and the actions' digests, and writes the lockfile with npm 11. It leaves the peer ranges alone, since changing one is a release, and leaves KERN to the KERN workflow. Its Dependency Dashboard issue lists what's pending. It runs as the [Renovate GitHub App](https://github.com/apps/renovate), installed on the repository.
+- **The KERN workflow** (`.github/workflows/kern.yml`) checks npm for KERN versions after the devDependency. It installs the newest in the peer range, which projects already get, and the newest of all, and for each regenerates the tokens and runs `npm test` and `npm run site`. Its report goes into an issue labelled `kern`: what the version adds and removes, the tokens `src/` reads that it lacks, what fails, the peer range and the release it calls for, the steps to update, and KERN's changelog. The issue is updated every week and closed once the devDependency is the newest KERN.
+
+Run the KERN check any time with **Actions → KERN → Run workflow**, or locally with `npx tsx scripts/check-kern.ts kern.md`, which puts back what it installs and regenerates. GitHub turns scheduled workflows off after 60 days without activity in a public repository; **Actions → KERN → Enable workflow** turns it back on.
+
+A Tailwind pull request is never merged unseen: go through the steps below on its branch first.
 
 ## Updating KERN or Tailwind
 
-After an update of `@kern-ux/native` or `tailwindcss`:
+The KERN workflow's issue goes through these steps for a new KERN and says which peer range and release it calls for. After an update of `@kern-ux/native` or `tailwindcss`:
 
 1. Run `npm run tokens` and look at the diff of `src/tokens.css` and `src/remap.css`.
 2. Run `npm test`. A token that `src/theme.css` reads and KERN no longer defines fails the token test.
