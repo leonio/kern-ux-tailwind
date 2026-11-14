@@ -38,6 +38,11 @@ const CANDIDATES = [
 	"rounded-md",
 	"lg:grid-cols-3",
 	"p-kern-default",
+	"text-kern-title",
+	"font-kern-body-strong",
+	"p-kern-11x-large",
+	"border-kern-bold",
+	"outline-kern-bold",
 ];
 
 describe("@leonio/kern-ux-tailwind", async () => {
@@ -75,6 +80,27 @@ describe("@leonio/kern-ux-tailwind", async () => {
 	it("gives KERN's type roles their size, line height and weight", () => {
 		expect(css).toContain(
 			".text-kern-body { font-size: var(--kern-typography-font-size-medium-static); line-height: var(--tw-leading, var(--kern-typography-line-height-medium-static)); font-weight: var(--tw-font-weight, var(--kern-typography-font-weight-body-default));",
+		);
+	});
+
+	it("gives KERN's title, preline and subline roles and its weight modifiers", () => {
+		expect(css).toContain(
+			".text-kern-title { font-size: var(--kern-typography-font-size-medium-adaptive); line-height: var(--tw-leading, var(--kern-typography-line-height-medium-adaptive)); font-weight: var(--tw-font-weight, var(--kern-typography-font-weight-title-default));",
+		);
+		expect(css).toContain(
+			".font-kern-body-strong { --tw-font-weight: var(--kern-typography-font-weight-body-strong); font-weight: var(--kern-typography-font-weight-body-strong); }",
+		);
+	});
+
+	it("has KERN's larger spacing steps and its border widths", () => {
+		expect(css).toContain(
+			".p-kern-11x-large { padding: var(--kern-metric-space-11x-large); }",
+		);
+		expect(css).toContain(
+			".border-kern-bold { border-style: var(--tw-border-style); border-width: var(--kern-metric-border-width-bold); }",
+		);
+		expect(css).toContain(
+			".outline-kern-bold { outline-style: var(--tw-outline-style); outline-width: var(--kern-metric-border-width-bold); }",
 		);
 	});
 

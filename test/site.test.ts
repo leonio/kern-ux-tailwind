@@ -188,6 +188,7 @@ describe("generatedBlocks", () => {
 		expect(blocks["type-roles"]).toContain('class="text-kern-heading-display"');
 		expect(blocks.spacing).toContain("w-kern-default");
 		expect(blocks["radii-shadows"]).toContain("shadow-kern-high");
+		expect(blocks.widths).toContain("border-kern-heavy");
 	});
 });
 

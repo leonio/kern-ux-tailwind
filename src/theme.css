@@ -124,6 +124,41 @@
 	--text-kern-label--font-weight: var(
 		--kern-typography-font-weight-label-default
 	);
+	--text-kern-preline: var(--kern-typography-font-size-medium-static);
+	--text-kern-preline--line-height: var(
+		--kern-typography-line-height-medium-static
+	);
+	--text-kern-preline--font-weight: var(
+		--kern-typography-font-weight-preline-default
+	);
+	--text-kern-subline: var(--kern-typography-font-size-medium-static);
+	--text-kern-subline--line-height: var(
+		--kern-typography-line-height-medium-static
+	);
+	--text-kern-subline--font-weight: var(
+		--kern-typography-font-weight-subline-default
+	);
+	--text-kern-title-small: var(--kern-typography-font-size-medium-static);
+	--text-kern-title-small--line-height: var(
+		--kern-typography-line-height-medium-static
+	);
+	--text-kern-title-small--font-weight: var(
+		--kern-typography-font-weight-title-default
+	);
+	--text-kern-title: var(--kern-typography-font-size-medium-adaptive);
+	--text-kern-title--line-height: var(
+		--kern-typography-line-height-medium-adaptive
+	);
+	--text-kern-title--font-weight: var(
+		--kern-typography-font-weight-title-default
+	);
+	--text-kern-title-large: var(--kern-typography-font-size-large-adaptive);
+	--text-kern-title-large--line-height: var(
+		--kern-typography-line-height-large-adaptive
+	);
+	--text-kern-title-large--font-weight: var(
+		--kern-typography-font-weight-title-default
+	);
 	--text-kern-heading-small: var(--kern-typography-font-size-medium-static);
 	--text-kern-heading-small--line-height: var(
 		--kern-typography-line-height-medium-static
@@ -164,6 +199,14 @@
 		--kern-typography-font-weight-heading-balanced
 	);
 
+	/* KERN's weight modifiers: kern-body--bold and kern-label--subtle. */
+	--font-weight-kern-body-strong: var(
+		--kern-typography-font-weight-body-strong
+	);
+	--font-weight-kern-label-subtle: var(
+		--kern-typography-font-weight-label-subtle
+	);
+
 	/* Tailwind's 0.25rem spacing step is KERN's grid: p-4 is space-default. */
 	--spacing-kern-2x-small: var(--kern-metric-space-2x-small);
 	--spacing-kern-x-small: var(--kern-metric-space-x-small);
@@ -175,6 +218,22 @@
 	--spacing-kern-3x-large: var(--kern-metric-space-3x-large);
 	--spacing-kern-4x-large: var(--kern-metric-space-4x-large);
 	--spacing-kern-5x-large: var(--kern-metric-space-5x-large);
+	--spacing-kern-6x-large: var(--kern-metric-space-6x-large);
+	--spacing-kern-7x-large: var(--kern-metric-space-7x-large);
+	--spacing-kern-8x-large: var(--kern-metric-space-8x-large);
+	--spacing-kern-9x-large: var(--kern-metric-space-9x-large);
+	--spacing-kern-10x-large: var(--kern-metric-space-10x-large);
+	--spacing-kern-11x-large: var(--kern-metric-space-11x-large);
+
+	/* KERN's border widths, for borders and outlines: border-kern-bold. */
+	--border-width-kern-light: var(--kern-metric-border-width-light);
+	--border-width-kern-default: var(--kern-metric-border-width-default);
+	--border-width-kern-bold: var(--kern-metric-border-width-bold);
+	--border-width-kern-heavy: var(--kern-metric-border-width-heavy);
+	--outline-width-kern-light: var(--kern-metric-border-width-light);
+	--outline-width-kern-default: var(--kern-metric-border-width-default);
+	--outline-width-kern-bold: var(--kern-metric-border-width-bold);
+	--outline-width-kern-heavy: var(--kern-metric-border-width-heavy);
 
 	--radius-kern-small: var(--kern-metric-border-radius-small);
 	--radius-kern-default: var(--kern-metric-border-radius-default);
