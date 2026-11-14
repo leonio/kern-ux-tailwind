@@ -33,7 +33,7 @@ Each KERN colour token `--kern-color-<name>` is the Tailwind colour `kern-<name>
 | `--kern-color-darkblue-700`                        | `text-kern-darkblue-700`                      |
 | `--kern-color-brand-colorpalette-1-500`            | `bg-kern-brand-colorpalette-1-500`            |
 
-That's 330 colours: KERN's semantic tokens, their `-contextual` variants, its eleven palettes of 20 steps (`darkblue`, `lightblue`, `turquois`, `green`, `limette`, `yellow`, `orange`, `red`, `violet`, `grey`, `neutral`), `white`, `black` and its two brand palettes. KERN spells its turquoise palette `turquois`, and so do the utilities.
+That's 329 colours: KERN's semantic tokens, their `-contextual` variants, its eleven palettes of 20 steps (`darkblue`, `lightblue`, `turquois`, `green`, `limette`, `yellow`, `orange`, `red`, `violet`, `grey`, `neutral`), `white`, `black` and its two brand palettes. KERN spells its turquoise palette `turquois`, and so do the utilities. One token gets no utility: KERN also defines `--kern-color-color-action-state-indicator-default-contextual`, a misspelling of `--kern-color-action-state-indicator-default-contextual`, which has one.
 
 Prefer the `-contextual` tokens and the semantic names above for anything that sits on a surface: they adapt to the surface level as well as to light and dark. KERN's own components use them.
 

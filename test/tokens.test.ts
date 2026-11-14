@@ -59,6 +59,7 @@ describe("generateFiles", () => {
 		--kern-color-darkblue-700: oklch(42% .16 265);
 		--kern-color-action-default: var(--kern-color-darkblue-700);
 		--kern-color-action-state-opacity-hover: 92%;
+		--kern-color-color-action-default: var(--kern-color-darkblue-700);
 	}`;
 	const generate = (tailwindTheme: string) =>
 		generateFiles({ kernCss, tailwindTheme });
@@ -72,6 +73,10 @@ describe("generateFiles", () => {
 			"--color-kern-darkblue-600: var(--kern-color-darkblue-600);",
 		);
 		expect(tokens).not.toContain("opacity-hover");
+	});
+
+	it("skips KERN's misspelt --kern-color-color- tokens", () => {
+		expect(generate("")["tokens.css"]).not.toContain("--color-kern-color-");
 	});
 
 	it("maps a Tailwind step to the KERN step nearest in lightness", () => {

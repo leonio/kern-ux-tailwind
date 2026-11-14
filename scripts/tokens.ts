@@ -112,6 +112,13 @@ const isPrimitive = (name: string) =>
 const isBrand = (name: string) => name.startsWith("brand-colorpalette-");
 // action-state-opacity-* live under --kern-color- but hold numbers.
 const isColor = (value: string) => !/^[\d.]+%?$/.test(value);
+/**
+ * KERN 2.8 also defines --kern-color-color-action-state-indicator-default-
+ * contextual, a misspelling of the token without the second "color-". A
+ * utility on it would go away when KERN fixes the spelling, so it gets none:
+ * the correctly spelt token has one.
+ */
+const isMisspelt = (name: string) => name.startsWith("color-");
 
 function lightness(oklch: string): number | undefined {
 	const match = /^oklch\(\s*([\d.]+)%/.exec(oklch);
@@ -129,7 +136,7 @@ const HEADER = `/*
 
 function tokensFile(colors: Map<string, string>): string {
 	const names = [...colors]
-		.filter(([, value]) => isColor(value))
+		.filter(([name, value]) => isColor(value) && !isMisspelt(name))
 		.map(([name]) => name);
 	const mirror = (name: string) =>
 		`--color-kern-${name}: var(--kern-color-${name});`;
