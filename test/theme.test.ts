@@ -1,7 +1,9 @@
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
+import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
 import { compile } from "@tailwindcss/node";
+import semver from "semver";
 import { describe, expect, it } from "vitest";
 
 const ROOT = fileURLToPath(new URL("../", import.meta.url));
@@ -119,6 +121,32 @@ describe("@leonio/kern-ux-tailwind/remap.css", async () => {
 		);
 	});
 });
+
+// Tailwind moves @scope out of the utility's rule from 4.3.4 on; dark-scope.css
+// needs that, and says so. The CI jobs on older Tailwind skip this.
+const TAILWIND: string = createRequire(import.meta.url)(
+	"tailwindcss/package.json",
+).version;
+
+describe.runIf(semver.gte(TAILWIND, "4.3.4"))(
+	"@leonio/kern-ux-tailwind/dark-scope.css",
+	async () => {
+		const css = await build(
+			'@import "tailwindcss"; @import "@leonio/kern-ux-tailwind"; @import "@leonio/kern-ux-tailwind/dark-scope.css";',
+			["dark:bg-indigo-400"],
+		);
+
+		it("replaces dark: with one scoped from a dark root to the nearest light one", () => {
+			expect(css).toContain(
+				'@scope ([data-kern-theme="dark"], .kern-dark) to ([data-kern-theme="light"], .kern-light) { .dark\\:bg-indigo-400:where(:scope, :scope *) {',
+			);
+			expect(css).toContain(
+				'@media (prefers-color-scheme: dark) { @scope (:root:not([data-kern-theme="light"], .kern-light)) to ([data-kern-theme="light"], .kern-light) { .dark\\:bg-indigo-400:where(:scope, :scope *) {',
+			);
+			expect(css).not.toContain('[data-kern-theme="dark"] *');
+		});
+	},
+);
 
 describe("the npm package", () => {
 	const manifest = JSON.parse(

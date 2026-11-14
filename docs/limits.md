@@ -6,7 +6,7 @@ Tailwind components keep their sizes, text sizes and focus styles; only colours,
 
 ## `dark:` inside a light section on a dark page
 
-`dark:` can't tell which themed ancestor is nearest, so a `data-kern-theme="light"` section inside a dark page still matches `dark:`. The colour utilities are right at any depth; use them there. See [The `dark:` variant](theming.md#the-dark-variant).
+`dark:` can't tell which themed ancestor is nearest, so a `data-kern-theme="light"` section inside a dark page still matches `dark:`. The colour utilities are right at any depth; use them there. Or import `dark-scope.css`, whose `dark:` is right at any depth too, in browsers with CSS `@scope`. See [A scoped `dark:`](theming.md#a-scoped-dark).
 
 ## KERN pads every `<textarea>`
 

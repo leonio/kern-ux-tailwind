@@ -29,6 +29,7 @@
 			"default": "./src/theme.css"
 		},
 		"./remap.css": "./src/remap.css",
+		"./dark-scope.css": "./src/dark-scope.css",
 		"./package.json": "./package.json"
 	},
 	"files": [
@@ -46,6 +47,7 @@
 		"site": "tsx scripts/build-site.ts",
 		"screenshots": "npm run site && tsx scripts/screenshots.ts",
 		"test": "vitest run",
+		"test:browser": "vitest run --config vitest.browser.config.ts",
 		"typecheck": "tsc --noEmit",
 		"lint": "biome ci .",
 		"format": "biome format --write ."

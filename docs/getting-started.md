@@ -23,6 +23,9 @@ Whatever the build, the stylesheet is the same:
 
 /* Optional: KERN colours, radii and shadows for markup that hard-codes Tailwind's. */
 @import "@leonio/kern-ux-tailwind/remap.css";
+
+/* Optional: a dark: that stops at light sections (Tailwind 4.3.4 or later). */
+@import "@leonio/kern-ux-tailwind/dark-scope.css";
 ```
 
 Import the theme **after** `tailwindcss`. The theme loads KERN's stylesheet into Tailwind's `base` layer, and it has to come after Tailwind's preflight there. Imported first, preflight would come last and reset KERN's components.

@@ -59,7 +59,24 @@ The plain tokens, such as `bg-kern-layout-background-default`, follow light and 
 
 It's there for markup that pairs colours itself, as most Tailwind components do: `bg-white dark:bg-gray-900`. For your own markup, use the semantic or `kern-` colours instead, which need no `dark:` at all.
 
-One case `dark:` gets wrong: a light section inside a dark page. A CSS selector can't tell which themed ancestor is nearest, so elements in that section still match `dark:`. The colour utilities are right at any depth.
+One case `dark:` gets wrong: a light section inside a dark page. A CSS selector can't tell which themed ancestor is nearest, so elements in that section still match `dark:`. The colour utilities are right at any depth, and so is the scoped `dark:` below.
+
+### A scoped `dark:`
+
+`dark-scope.css` replaces `dark:` with one built on CSS `@scope`, which stops at the nearest light section. It matches exactly where KERN is dark, at any depth: a light section on a dark page doesn't match, and a dark section inside it does again. Import it after the theme:
+
+```css
+@import "tailwindcss";
+@import "@leonio/kern-ux-tailwind";
+@import "@leonio/kern-ux-tailwind/dark-scope.css";
+```
+
+It needs two things the theme itself doesn't:
+
+- **Tailwind CSS 4.3.4 or later.** Earlier versions leave `@scope` inside the utility's rule, where it matches nothing.
+- **Browsers with `@scope`:** Chrome and Edge 118, Safari 17.4 and Firefox 146 or later, which includes Firefox ESR 153. In a browser without it, `dark:` never matches, so pages there stay light where markup pairs colours with `dark:`. The colour utilities still follow KERN's themes there.
+
+Without it, `dark:` works in every browser Tailwind CSS v4 supports.
 
 ## Themes that redefine KERN's tokens
 

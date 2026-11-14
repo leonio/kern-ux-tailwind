@@ -1,0 +1,40 @@
+/*
+ * An opt-in dark: that follows the nearest themed ancestor. Import it after
+ * the theme:
+ *
+ *   @import "tailwindcss";
+ *   @import "@leonio/kern-ux-tailwind";
+ *   @import "@leonio/kern-ux-tailwind/dark-scope.css";
+ *
+ * The theme's dark: matches below any dark ancestor, so a light section on a
+ * dark page still gets dark: styles. This one uses @scope, which stops at
+ * the nearest data-kern-theme="light" or .kern-light below a dark root:
+ * dark: is right at any depth, as the colour utilities are.
+ *
+ * It needs Tailwind CSS 4.3.4 or later, which moves @scope out of the
+ * utility's rule (earlier versions nest it there, where it matches nothing),
+ * and browsers with @scope: Chrome and Edge 118, Safari 17.4, Firefox 146.
+ * Where a browser lacks @scope, dark: never matches.
+ */
+@custom-variant dark {
+	/* Inside a dark section, or on it, down to the nearest light one. */
+	@scope ([data-kern-theme="dark"], .kern-dark) to (
+		[data-kern-theme="light"],
+		.kern-light
+	) {
+		&:where(:scope, :scope *) {
+			@slot;
+		}
+	}
+	/* The system preference, unless the root sets light, down to the nearest light section. */
+	@media (prefers-color-scheme: dark) {
+		@scope (:root:not([data-kern-theme="light"], .kern-light)) to (
+			[data-kern-theme="light"],
+			.kern-light
+		) {
+			&:where(:scope, :scope *) {
+				@slot;
+			}
+		}
+	}
+}

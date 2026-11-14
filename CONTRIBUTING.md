@@ -4,12 +4,13 @@ The package is plain CSS with no build step. `src/theme.css` is written by hand;
 
 ```bash
 npm ci
-npm test            # generated files, token names and the compiled theme
-npm run lint        # Biome
-npm run typecheck   # the scripts and tests
-npm run site        # builds the docs site and the demo into site/dist
-npm run screenshots # rebuilds the site and writes docs/images/comparison-*.png
-npm run tokens      # regenerates src/tokens.css and src/remap.css
+npm test             # generated files, token names and the compiled theme
+npm run test:browser # dark-scope.css in Chromium
+npm run lint         # Biome
+npm run typecheck    # the scripts and tests
+npm run site         # builds the docs site and the demo into site/dist
+npm run screenshots  # rebuilds the site and writes docs/images/comparison-*.png
+npm run tokens       # regenerates src/tokens.css and src/remap.css
 ```
 
 ## The tests
@@ -17,7 +18,9 @@ npm run tokens      # regenerates src/tokens.css and src/remap.css
 - `test/tokens.test.ts` fails when the generated files aren't what `npm run tokens` would write, or when a stylesheet in `src/` reads a `--kern-…` property that `@kern-ux/native` doesn't define.
 - `test/theme.test.ts` compiles the package with Tailwind, importing it by name as a project would, and checks the result: KERN in the base layer after preflight, the utilities, `dark:`, the breakpoints and `remap.css`. It also checks that `npm pack` includes every file the exports name.
 
-CI runs both, and runs `theme.test.ts` again with Tailwind 4.1.0 and 4.2.0, the oldest versions the peer range allows.
+- `test/browser/dark-scope.test.ts` loads pages into Chromium and checks that `dark-scope.css` matches `dark:` exactly where KERN is dark, light sections on dark pages included. It runs with `npm run test:browser`, not `npm test`, and needs a Chromium once: `npx playwright-core install chromium`, or set `CHROMIUM_PATH` to one you have.
+
+CI runs all three, and runs `theme.test.ts` again with Tailwind 4.1.0 and 4.2.0, the oldest versions the peer range allows. Its `dark-scope.css` test needs Tailwind 4.3.4 and is skipped there.
 
 ## Dependency updates
 
