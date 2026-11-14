@@ -19,6 +19,12 @@ npm run tokens      # regenerates src/tokens.css and src/remap.css
 
 CI runs both, and runs `theme.test.ts` again with Tailwind 4.1.0 and 4.2.0, the oldest versions the peer range allows.
 
+## Dependency updates
+
+[Renovate](https://github.com/apps/renovate) (`.github/renovate.json`) looks for updates early every Monday (UTC) and opens the pull requests: one for the tools' minor and patch updates, one for Tailwind, one for KERN, one for each major update, and one that refreshes `package-lock.json`. It covers the npm devDependencies, the GitHub Actions in `.github/workflows/`, CI's Node version and the schema version in `biome.json`. It waits three days after an npm release, pins the devDependencies and the actions' digests, and writes the lockfile with npm 11. It leaves the peer ranges alone: changing one is a release. Its Dependency Dashboard issue lists what's pending. It runs as the Renovate GitHub App, installed on the repository.
+
+A KERN or Tailwind pull request is never merged unseen: go through the steps below on its branch first.
+
 ## Updating KERN or Tailwind
 
 After an update of `@kern-ux/native` or `tailwindcss`:
