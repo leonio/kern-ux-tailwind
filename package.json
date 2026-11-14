@@ -55,19 +55,19 @@
 		"tailwindcss": "^4.1.0"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.6.4",
+		"@biomejs/biome": "^2.6.7",
 		"@kern-ux/native": "2.8.2",
 		"@tailwindcss/cli": "^4.3.5",
 		"@tailwindcss/node": "^4.3.5",
 		"@types/node": "^24.19.2",
 		"@types/semver": "^7.8.0",
 		"markdown-it": "^15.0.3",
-		"playwright-core": "^1.64.1",
-		"semver": "^7.8.5",
-		"shiki": "^4.5.0",
+		"playwright-core": "^1.65.1",
+		"semver": "^7.8.6",
+		"shiki": "^4.6.0",
 		"tailwindcss": "^4.3.5",
 		"tsx": "^4.23.15",
 		"typescript": "^7.0.2",
-		"vitest": "^5.0.5"
+		"vitest": "^5.1.0"
 	}
 }
