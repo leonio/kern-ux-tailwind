@@ -1,0 +1,73 @@
+name: KERN
+
+# Every Monday, checks npm for KERN versions after the one the package is
+# tested with (scripts/check-kern.ts): installs them, regenerates the tokens,
+# and runs the tests and the site build with them. When there's one, an issue
+# labelled kern holds the report, updated each week; it's closed once the
+# package is tested with the newest KERN. Renovate leaves KERN to this.
+
+on:
+  schedule:
+    - cron: "23 5 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Check for a New KERN
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: npm
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Check KERN
+        id: check
+        run: npx tsx scripts/check-kern.ts "$RUNNER_TEMP/kern.md"
+
+      - name: Update the Issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.check.outputs.version }}
+          TESTED: ${{ steps.check.outputs.tested }}
+          REPORT: ${{ runner.temp }}/kern.md
+        shell: bash
+        run: |
+          gh label create kern --color 0b5ca7 --description "A new KERN version" --force
+          open="$(gh issue list --label kern --state open --limit 100 --json number,title --jq '.[] | "\(.number)\t\(.title)"')"
+          title=""
+          number=""
+          if [[ -n "$VERSION" ]]; then
+            title="KERN $VERSION is out"
+            number="$(awk -F '\t' -v title="$title" '$2 == title { print $1 }' <<< "$open")"
+            if [[ -n "$number" ]]; then
+              gh issue edit "$number" --body-file "$REPORT"
+            else
+              url="$(gh issue create --title "$title" --label kern --body-file "$REPORT")"
+              number="${url##*/}"
+            fi
+            echo "#$number: $title"
+          fi
+          while IFS=$'\t' read -r other other_title; do
+            if [[ -z "$other" || "$other_title" == "$title" ]]; then
+              continue
+            fi
+            if [[ -n "$number" ]]; then
+              gh issue close "$other" --comment "Superseded by #$number, for KERN $VERSION."
+            else
+              gh issue close "$other" --comment "The package is tested with KERN $TESTED, the newest, now."
+            fi
+          done <<< "$open"
