@@ -234,14 +234,19 @@ export function generateFiles({
 	};
 }
 
+/** The custom properties KERN's stylesheet defines. */
+export function definedKernTokens(kernCss: string): Set<string> {
+	return new Set(
+		[...kernCss.matchAll(/(--kern-[a-zA-Z0-9-]+)\s*:/g)].map((m) => m[1]),
+	);
+}
+
 /**
  * The KERN custom properties a stylesheet reads with var() that KERN doesn't
  * define. Formatters wrap long values as `var(\n\t--kern-…)`, hence the \s*.
  */
 export function undefinedKernTokens(css: string, kernCss: string): string[] {
-	const defined = new Set(
-		[...kernCss.matchAll(/(--kern-[a-zA-Z0-9-]+)\s*:/g)].map((m) => m[1]),
-	);
+	const defined = definedKernTokens(kernCss);
 	const used = new Set(
 		[...css.matchAll(/var\(\s*(--kern-[a-zA-Z0-9-]+)/g)].map((m) => m[1]),
 	);
