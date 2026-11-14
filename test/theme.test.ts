@@ -32,6 +32,7 @@ function layerAt(css: string, index: number): string | undefined {
 
 const CANDIDATES = [
 	"bg-primary",
+	"bg-sidebar-accent",
 	"text-kern-body",
 	"dark:bg-indigo-400",
 	"bg-indigo-600",
@@ -70,6 +71,12 @@ describe("@leonio/kern-ux-tailwind", async () => {
 			".p-kern-default { padding: var(--kern-metric-space-default); }",
 		);
 		expect(css).not.toContain("--color-primary:");
+	});
+
+	it("gives shadcn/ui's sidebar colours KERN's surface and hover tint", () => {
+		expect(css).toContain(
+			".bg-sidebar-accent { background-color: var(--kern-color-action-state-indicator-tint-hover-opacity); }",
+		);
 	});
 
 	it("gives KERN's type roles their size, line height and weight", () => {

@@ -20,7 +20,9 @@ shadcn/ui's CLI writes its own colour variables into your global stylesheet. Rep
 4. Delete its `@custom-variant dark` line, so `dark:` follows KERN's theme instead of a `.dark` class.
 5. Keep the rest, such as the `@layer base` block that sets `border-border` and `bg-background`.
 
-Its chart and sidebar colours (`chart-1` …, `sidebar` …) have no KERN equivalent. If you use those components, keep their lines of the `@theme inline` block and point each straight at a KERN colour, for example `--color-sidebar: var(--kern-color-layout-background-hued);`. Inside `@theme inline`, the colour then resolves where it's used and follows KERN's themes.
+The theme defines its sidebar colours too (`sidebar`, `sidebar-primary`, `sidebar-accent` …), so its Sidebar component renders on KERN's surface with nothing to keep. Its chart colours (`chart-1` … `chart-5`) have no KERN equivalent, since KERN has no palette for charts. If you use its charts, keep those lines of the `@theme inline` block and point each straight at a KERN colour, for example `--color-chart-1: var(--kern-color-darkblue-500);`. Inside `@theme inline`, the colour then resolves where it's used and follows KERN's themes.
+
+To give the sidebar other colours, redefine them after the theme in the same way, for example `--color-sidebar: var(--kern-color-layout-background-hued);`.
 
 Without its `@theme inline` block, `rounded-md` and the other radii are Tailwind's again; add `remap.css` to have them use KERN's radii.
 

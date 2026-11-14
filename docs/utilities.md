@@ -6,20 +6,29 @@ Everything the theme adds to Tailwind, or changes in it. Every value is a KERN c
 
 The names shadcn/ui and most Tailwind component code use, on KERN's contextual tokens. Use them with any colour utility: `bg-`, `text-`, `border-`, `outline-`, `ring-` and so on, with opacity modifiers such as `bg-primary/50`.
 
-| Name                                                                                               | KERN token (`--kern-color-…`)          |
-| -------------------------------------------------------------------------------------------------- | -------------------------------------- |
-| `background`, `card`, `popover`                                                                    | `layout-background-default-contextual` |
-| `foreground`, `card-foreground`, `popover-foreground`, `secondary-foreground`, `accent-foreground` | `layout-text-default-contextual`       |
-| `primary`                                                                                          | `action-default-contextual`            |
-| `primary-foreground`                                                                               | `action-on-default-contextual`         |
-| `secondary`, `muted`, `accent`                                                                     | `layout-layer-surface-contextual`      |
-| `muted-foreground`                                                                                 | `layout-text-muted-contextual`         |
-| `destructive`                                                                                      | `feedback-danger-contextual`           |
-| `border`                                                                                           | `decorative-border-contextual`         |
-| `input`                                                                                            | `form-input-border-contextual`         |
-| `ring`                                                                                             | `action-focus-default-contextual`      |
+| Name                                                                                               | KERN token (`--kern-color-…`)               |
+| -------------------------------------------------------------------------------------------------- | ------------------------------------------- |
+| `background`, `card`, `popover`                                                                    | `layout-background-default-contextual`      |
+| `foreground`, `card-foreground`, `popover-foreground`, `secondary-foreground`, `accent-foreground` | `layout-text-default-contextual`            |
+| `primary`                                                                                          | `action-default-contextual`                 |
+| `primary-foreground`                                                                               | `action-on-default-contextual`              |
+| `secondary`, `muted`, `accent`                                                                     | `layout-layer-surface-contextual`           |
+| `muted-foreground`                                                                                 | `layout-text-muted-contextual`              |
+| `destructive`                                                                                      | `feedback-danger-contextual`                |
+| `border`                                                                                           | `decorative-border-contextual`              |
+| `input`                                                                                            | `form-input-border-contextual`              |
+| `ring`                                                                                             | `action-focus-default-contextual`           |
+| `sidebar`                                                                                          | `layout-layer-surface-contextual`           |
+| `sidebar-foreground`, `sidebar-accent-foreground`                                                  | `layout-text-default-contextual`            |
+| `sidebar-primary`                                                                                  | `action-default-contextual`                 |
+| `sidebar-primary-foreground`                                                                       | `action-on-default-contextual`              |
+| `sidebar-accent`                                                                                   | `action-state-indicator-tint-hover-opacity` |
+| `sidebar-border`                                                                                   | `decorative-border-contextual`              |
+| `sidebar-ring`                                                                                     | `action-focus-default-contextual`           |
 
 <!-- site:semantic-colours -->
+
+KERN has no sidebar. shadcn/ui's sidebar colours put it on KERN's surface, and its hovered and active items take the translucent tint KERN's tertiary buttons and accordion headers take on hover.
 
 ## Every KERN colour
 
