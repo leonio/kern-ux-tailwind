@@ -96,19 +96,19 @@
 	--color-ring: var(--kern-color-action-focus-default-contextual);
 
 	/*
-	 * shadcn/ui's sidebar. KERN has no sidebar: it sits on KERN's surface,
-	 * and its hovered and active items take the tint KERN's tertiary buttons
-	 * and accordion headers take on hover.
+	 * shadcn/ui's sidebar. KERN has no sidebar: it takes the background of
+	 * the level it sits on, and its hovered and active items the surface, as
+	 * accent does. With kern-level-1 on it, it stands apart from the page and
+	 * bg-muted inside it still shows. These name KERN's tokens, not the names
+	 * above: var(--color-ring) here would resolve once, on :root.
 	 */
-	--color-sidebar: var(--kern-color-layout-layer-surface-contextual);
+	--color-sidebar: var(--kern-color-layout-background-default-contextual);
 	--color-sidebar-foreground: var(--kern-color-layout-text-default-contextual);
 	--color-sidebar-primary: var(--kern-color-action-default-contextual);
 	--color-sidebar-primary-foreground: var(
 		--kern-color-action-on-default-contextual
 	);
-	--color-sidebar-accent: var(
-		--kern-color-action-state-indicator-tint-hover-opacity
-	);
+	--color-sidebar-accent: var(--kern-color-layout-layer-surface-contextual);
 	--color-sidebar-accent-foreground: var(
 		--kern-color-layout-text-default-contextual
 	);

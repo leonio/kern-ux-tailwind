@@ -32,7 +32,16 @@ function layerAt(css: string, index: number): string | undefined {
 
 const CANDIDATES = [
 	"bg-primary",
-	"bg-sidebar-accent",
+	...[
+		"sidebar",
+		"sidebar-foreground",
+		"sidebar-primary",
+		"sidebar-primary-foreground",
+		"sidebar-accent",
+		"sidebar-accent-foreground",
+		"sidebar-border",
+		"sidebar-ring",
+	].map((name) => `bg-${name}`),
 	"text-kern-body",
 	"dark:bg-indigo-400",
 	"bg-indigo-600",
@@ -73,9 +82,18 @@ describe("@leonio/kern-ux-tailwind", async () => {
 		expect(css).not.toContain("--color-primary:");
 	});
 
-	it("gives shadcn/ui's sidebar colours KERN's surface and hover tint", () => {
+	it.each([
+		["sidebar", "layout-background-default-contextual"],
+		["sidebar-foreground", "layout-text-default-contextual"],
+		["sidebar-primary", "action-default-contextual"],
+		["sidebar-primary-foreground", "action-on-default-contextual"],
+		["sidebar-accent", "layout-layer-surface-contextual"],
+		["sidebar-accent-foreground", "layout-text-default-contextual"],
+		["sidebar-border", "decorative-border-contextual"],
+		["sidebar-ring", "action-focus-default-contextual"],
+	])("gives shadcn/ui's %s KERN's %s", (name, token) => {
 		expect(css).toContain(
-			".bg-sidebar-accent { background-color: var(--kern-color-action-state-indicator-tint-hover-opacity); }",
+			`.bg-${name} { background-color: var(--kern-color-${token}); }`,
 		);
 	});
 
