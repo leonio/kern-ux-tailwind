@@ -225,7 +225,11 @@
 	--spacing-kern-10x-large: var(--kern-metric-space-10x-large);
 	--spacing-kern-11x-large: var(--kern-metric-space-11x-large);
 
-	/* KERN's border widths, for borders and outlines: border-kern-bold. */
+	/*
+	 * KERN's border widths, for borders and outlines: border-kern-bold.
+	 * Tailwind reads --border-width-* and --outline-width-* for border-* and
+	 * outline-*; CI checks it on the oldest Tailwind versions in the range.
+	 */
 	--border-width-kern-light: var(--kern-metric-border-width-light);
 	--border-width-kern-default: var(--kern-metric-border-width-default);
 	--border-width-kern-bold: var(--kern-metric-border-width-bold);

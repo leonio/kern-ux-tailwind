@@ -40,7 +40,7 @@ Each row shows a component three ways. The button row's markup, from left to rig
 **Tailwind on KERN's tokens**, as you'd write it with this theme:
 
 ```html example
-<button type="button" class="inline-flex min-h-12 items-center rounded-kern-default bg-primary px-kern-large text-kern-label text-primary-foreground hover:bg-kern-action-state-indicator-shade-hover focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-ring">
+<button type="button" class="inline-flex min-h-12 items-center rounded-kern-default bg-primary px-kern-large text-kern-label text-primary-foreground hover:bg-kern-action-state-indicator-shade-hover focus-visible:outline-kern-bold focus-visible:outline-offset-2 focus-visible:outline-ring">
   Submit
 </button>
 ```

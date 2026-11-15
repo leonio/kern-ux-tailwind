@@ -38,12 +38,24 @@ const CANDIDATES = [
 	"rounded-md",
 	"lg:grid-cols-3",
 	"p-kern-default",
-	"text-kern-title",
-	"font-kern-body-strong",
-	"p-kern-11x-large",
-	"border-kern-bold",
-	"outline-kern-bold",
 ];
+
+/** The utilities from KERN's type classes, weights, spacing and border widths. */
+const NEW = [
+	"text-kern-preline",
+	"text-kern-subline",
+	"text-kern-title-small",
+	"text-kern-title",
+	"text-kern-title-large",
+	"font-kern-body-strong",
+	"font-kern-label-subtle",
+	...["6x", "7x", "8x", "9x", "10x", "11x"].map((n) => `p-kern-${n}-large`),
+	...["light", "default", "bold", "heavy"].flatMap((w) => [
+		`border-kern-${w}`,
+		`outline-kern-${w}`,
+	]),
+];
+CANDIDATES.push(...NEW);
 
 describe("@leonio/kern-ux-tailwind", async () => {
 	const css = await build(
@@ -90,6 +102,12 @@ describe("@leonio/kern-ux-tailwind", async () => {
 		expect(css).toContain(
 			".font-kern-body-strong { --tw-font-weight: var(--kern-typography-font-weight-body-strong); font-weight: var(--kern-typography-font-weight-body-strong); }",
 		);
+	});
+
+	it.each(NEW)("compiles %s to a KERN variable", (utility) => {
+		const at = css.indexOf(`.${utility} {`);
+		expect(at).toBeGreaterThan(-1);
+		expect(css.slice(at, css.indexOf("}", at))).toContain("var(--kern-");
 	});
 
 	it("has KERN's larger spacing steps and its border widths", () => {
