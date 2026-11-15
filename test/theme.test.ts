@@ -40,6 +40,23 @@ const CANDIDATES = [
 	"p-kern-default",
 ];
 
+/** The utilities from KERN's type classes, weights, spacing and border widths. */
+const NEW = [
+	"text-kern-preline",
+	"text-kern-subline",
+	"text-kern-title-small",
+	"text-kern-title",
+	"text-kern-title-large",
+	"font-kern-body-strong",
+	"font-kern-label-subtle",
+	...["6x", "7x", "8x", "9x", "10x", "11x"].map((n) => `p-kern-${n}-large`),
+	...["light", "default", "bold", "heavy"].flatMap((w) => [
+		`border-kern-${w}`,
+		`outline-kern-${w}`,
+	]),
+];
+CANDIDATES.push(...NEW);
+
 describe("@leonio/kern-ux-tailwind", async () => {
 	const css = await build(
 		'@import "tailwindcss"; @import "@leonio/kern-ux-tailwind";',
@@ -75,6 +92,33 @@ describe("@leonio/kern-ux-tailwind", async () => {
 	it("gives KERN's type roles their size, line height and weight", () => {
 		expect(css).toContain(
 			".text-kern-body { font-size: var(--kern-typography-font-size-medium-static); line-height: var(--tw-leading, var(--kern-typography-line-height-medium-static)); font-weight: var(--tw-font-weight, var(--kern-typography-font-weight-body-default));",
+		);
+	});
+
+	it("gives KERN's title, preline and subline roles and its weight modifiers", () => {
+		expect(css).toContain(
+			".text-kern-title { font-size: var(--kern-typography-font-size-medium-adaptive); line-height: var(--tw-leading, var(--kern-typography-line-height-medium-adaptive)); font-weight: var(--tw-font-weight, var(--kern-typography-font-weight-title-default));",
+		);
+		expect(css).toContain(
+			".font-kern-body-strong { --tw-font-weight: var(--kern-typography-font-weight-body-strong); font-weight: var(--kern-typography-font-weight-body-strong); }",
+		);
+	});
+
+	it.each(NEW)("compiles %s to a KERN variable", (utility) => {
+		const at = css.indexOf(`.${utility} {`);
+		expect(at).toBeGreaterThan(-1);
+		expect(css.slice(at, css.indexOf("}", at))).toContain("var(--kern-");
+	});
+
+	it("has KERN's larger spacing steps and its border widths", () => {
+		expect(css).toContain(
+			".p-kern-11x-large { padding: var(--kern-metric-space-11x-large); }",
+		);
+		expect(css).toContain(
+			".border-kern-bold { border-style: var(--tw-border-style); border-width: var(--kern-metric-border-width-bold); }",
+		);
+		expect(css).toContain(
+			".outline-kern-bold { outline-style: var(--tw-outline-style); outline-width: var(--kern-metric-border-width-bold); }",
 		);
 	});
 

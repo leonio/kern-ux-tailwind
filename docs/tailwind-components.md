@@ -91,13 +91,13 @@ The theme changes values, not markup. A pasted component keeps its sizes, text s
 | Text          | 14px (`text-sm`)             | 16px at the smallest, 18px for body text |
 | Focus         | 2px outline or a 3px ring    | 4px outline in `action-focus-default`    |
 
-To bring a component closer to KERN, swap those classes: `min-h-12` on buttons, `text-kern-body` or `text-kern-label` for text, `focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-ring` for focus. For KERN-conformant UI, use KERN's components, or build on the tokens as the [demo](https://leonio.github.io/kern-ux-tailwind/demo/)'s middle column does.
+To bring a component closer to KERN, swap those classes: `min-h-12` on buttons, `text-kern-body` or `text-kern-label` for text, `focus-visible:outline-kern-bold focus-visible:outline-offset-2 focus-visible:outline-ring` for focus. For KERN-conformant UI, use KERN's components, or build on the tokens as the [demo](https://leonio.github.io/kern-ux-tailwind/demo/)'s middle column does.
 
 A pasted button, and the same button with those swaps:
 
 ```html example
 <button type="button" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white">As pasted</button>
-<button type="button" class="min-h-12 rounded-md bg-indigo-600 px-kern-large text-kern-label text-white focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-ring">
+<button type="button" class="min-h-12 rounded-md bg-indigo-600 px-kern-large text-kern-label text-white focus-visible:outline-kern-bold focus-visible:outline-offset-2 focus-visible:outline-ring">
 	Closer to KERN
 </button>
 ```

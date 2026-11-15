@@ -40,7 +40,7 @@ Each row shows a component three ways. The button row's markup, from left to rig
 **Tailwind on KERN's tokens**, as you'd write it with this theme:
 
 ```html example
-<button type="button" class="inline-flex min-h-12 items-center rounded-kern-default bg-primary px-kern-large text-kern-label text-primary-foreground hover:bg-kern-action-state-indicator-shade-hover focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-ring">
+<button type="button" class="inline-flex min-h-12 items-center rounded-kern-default bg-primary px-kern-large text-kern-label text-primary-foreground hover:bg-kern-action-state-indicator-shade-hover focus-visible:outline-kern-bold focus-visible:outline-offset-2 focus-visible:outline-ring">
   Submit
 </button>
 ```
@@ -58,7 +58,7 @@ The markup of every row is in [`site/pages/demo.html`](https://github.com/leonio
 ## Documentation
 
 - **[Getting started](https://leonio.github.io/kern-ux-tailwind/docs/getting-started.html)**: install, set up with Vite, PostCSS or the Tailwind CLI, and load KERN's font.
-- **[Utilities](https://leonio.github.io/kern-ux-tailwind/docs/utilities.html)**: every colour, type role, spacing step, radius, shadow and breakpoint the theme adds or changes.
+- **[Utilities](https://leonio.github.io/kern-ux-tailwind/docs/utilities.html)**: every colour, type role, spacing step, border width, radius, shadow and breakpoint the theme adds or changes.
 - **[Light, dark and sections](https://leonio.github.io/kern-ux-tailwind/docs/theming.html)**: how the utilities follow KERN's themes, and what `dark:` matches.
 - **[Tailwind components](https://leonio.github.io/kern-ux-tailwind/docs/tailwind-components.html)**: shadcn/ui and other components with semantic colour names, and `remap.css` for markup that hard-codes Tailwind's palette.
 - **[Limits](https://leonio.github.io/kern-ux-tailwind/docs/limits.html)**: what the theme doesn't change, and the known issues with workarounds.
@@ -70,7 +70,7 @@ The markup of every row is in [`site/pages/demo.html`](https://github.com/leonio
 | `bg-primary`, `text-foreground`, `text-muted-foreground`, `border-input`, `outline-ring` … | Its contextual colour tokens, under the names shadcn/ui and most Tailwind component code use         |
 | `bg-kern-<name>`, `text-kern-<name>` …                                                     | Every `--kern-color-<name>`: `bg-kern-feedback-info-background-contextual`, `text-kern-darkblue-700` |
 | `text-kern-body`, `text-kern-heading-large` …                                              | Its type roles, each with size, line height and weight                                               |
-| `p-kern-default`, `rounded-kern-default`, `shadow-kern-high`                               | Its spacing, radii and elevations                                                                    |
+| `p-kern-default`, `border-kern-bold`, `rounded-kern-default`, `shadow-kern-high`           | Its spacing, border widths, radii and elevations                                                     |
 | `sm:` … `2xl:`                                                                             | Its grid breakpoints: 576, 768, 992, 1200 and 1600px                                                 |
 | `dark:`                                                                                    | Its theme switch: the system preference, or `data-kern-theme`                                        |
 | `font-sans`                                                                                | Fira Sans                                                                                            |
