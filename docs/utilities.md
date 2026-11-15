@@ -18,8 +18,17 @@ The names shadcn/ui and most Tailwind component code use, on KERN's contextual t
 | `border`                                                                                           | `decorative-border-contextual`         |
 | `input`                                                                                            | `form-input-border-contextual`         |
 | `ring`                                                                                             | `action-focus-default-contextual`      |
+| `sidebar`                                                                                          | `layout-background-default-contextual` |
+| `sidebar-foreground`, `sidebar-accent-foreground`                                                  | `layout-text-default-contextual`       |
+| `sidebar-primary`                                                                                  | `action-default-contextual`            |
+| `sidebar-primary-foreground`                                                                       | `action-on-default-contextual`         |
+| `sidebar-accent`                                                                                   | `layout-layer-surface-contextual`      |
+| `sidebar-border`                                                                                   | `decorative-border-contextual`         |
+| `sidebar-ring`                                                                                     | `action-focus-default-contextual`      |
 
 <!-- site:semantic-colours -->
+
+KERN has no sidebar. shadcn/ui's sidebar takes the background of the level it sits on, and its hovered and active items the surface, as `accent` does. Put `kern-level-1` on it to set it apart from the page, as KERN does for a section: the sidebar and everything in it then take level 1's colours, so `bg-muted` inside it still shows.
 
 ## Every KERN colour
 
