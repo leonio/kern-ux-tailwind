@@ -112,6 +112,20 @@ const isPrimitive = (name: string) =>
 const isBrand = (name: string) => name.startsWith("brand-colorpalette-");
 // action-state-opacity-* live under --kern-color- but hold numbers.
 const isColor = (value: string) => !/^[\d.]+%?$/.test(value);
+/**
+ * KERN 2.8 also defines --kern-color-color-action-state-indicator-default-
+ * contextual, a misspelling of the token without the second "color-". Its
+ * utility reads the correctly spelt token instead, so it keeps working when
+ * KERN fixes the spelling. Without a correctly spelt twin, a name is mirrored
+ * as it is.
+ */
+function correctSpelling(
+	name: string,
+	colors: Map<string, string>,
+): string | undefined {
+	const twin = name.replace(/^color-/, "");
+	return twin !== name && colors.has(twin) ? twin : undefined;
+}
 
 function lightness(oklch: string): number | undefined {
 	const match = /^oklch\(\s*([\d.]+)%/.exec(oklch);
@@ -132,7 +146,7 @@ function tokensFile(colors: Map<string, string>): string {
 		.filter(([, value]) => isColor(value))
 		.map(([name]) => name);
 	const mirror = (name: string) =>
-		`--color-kern-${name}: var(--kern-color-${name});`;
+		`--color-kern-${name}: var(--kern-color-${correctSpelling(name, colors) ?? name});`;
 	return `${HEADER}
  * Every KERN colour token --kern-color-<name> as the Tailwind colour
  * kern-<name>: --kern-color-action-default-contextual is

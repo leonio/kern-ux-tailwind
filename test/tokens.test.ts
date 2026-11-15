@@ -28,6 +28,13 @@ describe("the checked-in src/", () => {
 		},
 	);
 
+	it("has as many colours as docs/utilities.md says", () => {
+		const [, said] =
+			/That's (\d+) colours/.exec(checkedIn("../docs/utilities.md")) ?? [];
+		const colours = checkedIn("tokens.css").match(/--color-kern-/g) ?? [];
+		expect(Number(said)).toBe(colours.length);
+	});
+
 	it("is tested with a KERN version in the package's peer range", () => {
 		// The tests vouch for the KERN they run with: the range must include it.
 		const range: string = JSON.parse(checkedIn("../package.json"))
@@ -59,6 +66,7 @@ describe("generateFiles", () => {
 		--kern-color-darkblue-700: oklch(42% .16 265);
 		--kern-color-action-default: var(--kern-color-darkblue-700);
 		--kern-color-action-state-opacity-hover: 92%;
+		--kern-color-color-action-default: var(--kern-color-darkblue-700);
 	}`;
 	const generate = (tailwindTheme: string) =>
 		generateFiles({ kernCss, tailwindTheme });
@@ -72,6 +80,21 @@ describe("generateFiles", () => {
 			"--color-kern-darkblue-600: var(--kern-color-darkblue-600);",
 		);
 		expect(tokens).not.toContain("opacity-hover");
+	});
+
+	it("points a misspelt --kern-color-color- token's utility at the correct spelling", () => {
+		expect(generate("")["tokens.css"]).toContain(
+			"--color-kern-color-action-default: var(--kern-color-action-default);",
+		);
+	});
+
+	it("mirrors a --kern-color-color- token as it is when there's no correct spelling", () => {
+		expect(
+			generateFiles({
+				kernCss: ":root{--kern-color-color-only: red}",
+				tailwindTheme: "",
+			})["tokens.css"],
+		).toContain("--color-kern-color-only: var(--kern-color-color-only);");
 	});
 
 	it("maps a Tailwind step to the KERN step nearest in lightness", () => {

@@ -58,7 +58,7 @@
 	--color-kern-layout-border-contextual: var(--kern-color-layout-border-contextual);
 	--color-kern-action-default-contextual: var(--kern-color-action-default-contextual);
 	--color-kern-action-on-default-contextual: var(--kern-color-action-on-default-contextual);
-	--color-kern-color-action-state-indicator-default-contextual: var(--kern-color-color-action-state-indicator-default-contextual);
+	--color-kern-color-action-state-indicator-default-contextual: var(--kern-color-action-state-indicator-default-contextual);
 	--color-kern-action-state-indicator-tint-contextual: var(--kern-color-action-state-indicator-tint-contextual);
 	--color-kern-action-visited-contextual: var(--kern-color-action-visited-contextual);
 	--color-kern-action-focus-default-contextual: var(--kern-color-action-focus-default-contextual);
