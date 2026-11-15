@@ -43,6 +43,91 @@ describe("the checked-in src/", () => {
 	});
 });
 
+/** The --kern-… custom property a declaration reads, from KERN or the theme. */
+const reads = (declarations: string, property: string) =>
+	[
+		...declarations.matchAll(
+			new RegExp(`${property}\\s*:\\s*var\\(\\s*(--kern-[a-z0-9-]+)`, "g"),
+		),
+	].at(-1)?.[1];
+
+/** Every declaration of the rules whose selector list has `selector` alone. */
+function kernRule(kernCss: string, selector: string): string {
+	return [...kernCss.matchAll(/([^{}]+)\{([^{}]*)\}/g)]
+		.filter(([, selectors]) =>
+			selectors.split(",").some((s) => s.trim() === selector),
+		)
+		.map(([, , declarations]) => declarations)
+		.join(";");
+}
+
+describe("src/theme.css against KERN's classes", () => {
+	const theme = checkedIn("theme.css");
+	const ROLES: Record<string, string> = {
+		"body-small": ".kern-body--small",
+		body: ".kern-body",
+		"body-large": ".kern-body--large",
+		label: ".kern-label",
+		preline: ".kern-preline",
+		subline: ".kern-subline",
+		"title-small": ".kern-title--small",
+		title: ".kern-title",
+		"title-large": ".kern-title--large",
+		"heading-small": ".kern-heading-small",
+		"heading-medium": ".kern-heading-medium",
+		"heading-large": ".kern-heading-large",
+		"heading-x-large": ".kern-heading-x-large",
+		"heading-display": ".kern-heading-display",
+	};
+
+	it("defines a role for each KERN type class listed, and no other", () => {
+		const roles = [
+			...theme.matchAll(/--text-kern-([a-z]+(?:-[a-z]+)*)\s*:/g),
+		].map((m) => m[1]);
+		expect(roles.sort()).toEqual(Object.keys(ROLES).sort());
+	});
+
+	it.each(Object.entries(ROLES))(
+		"text-kern-%s reads the tokens %s does",
+		(role, selector) => {
+			const kern = kernRule(sources.kernCss, selector);
+			expect(reads(kern, "font-size")).toMatch(/^--kern-/);
+			expect(reads(theme, `--text-kern-${role}`)).toBe(
+				reads(kern, "font-size"),
+			);
+			expect(reads(theme, `--text-kern-${role}--line-height`)).toBe(
+				reads(kern, "line-height"),
+			);
+			expect(reads(theme, `--text-kern-${role}--font-weight`)).toBe(
+				reads(kern, "font-weight"),
+			);
+		},
+	);
+
+	it.each([
+		["body-strong", ".kern-body--bold"],
+		["label-subtle", ".kern-label--subtle"],
+	])("font-kern-%s reads the weight %s does", (weight, selector) => {
+		expect(reads(theme, `--font-weight-kern-${weight}`)).toBe(
+			reads(kernRule(sources.kernCss, selector), "font-weight"),
+		);
+	});
+
+	it("gives no colour the name of another kern- utility", () => {
+		const others = new Set(
+			[
+				...theme.matchAll(
+					/--(?:text|font-weight|spacing|border-width|outline-width|radius|shadow)-(kern-[a-z0-9-]+?)(?:--[a-z-]+)?\s*:/g,
+				),
+			].map((m) => m[1]),
+		);
+		const colours = [
+			...checkedIn("tokens.css").matchAll(/--color-(kern-[a-z0-9-]+):/g),
+		].map((m) => m[1]);
+		expect(colours.filter((colour) => others.has(colour))).toEqual([]);
+	});
+});
+
 describe("undefinedKernTokens", () => {
 	const kernCss = ":root{--kern-color-a: red;--kern-b: 1px}";
 

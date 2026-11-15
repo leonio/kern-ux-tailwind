@@ -551,6 +551,7 @@ export function generatedBlocks(
 	);
 	const radii = names(themeCss, /--radius-(kern-[a-z]+):/g);
 	const shadows = names(themeCss, /--shadow-(kern-[a-z]+):/g);
+	const widths = names(themeCss, /--border-width-(kern-[a-z]+):/g);
 
 	return {
 		"semantic-colours": `<div class="grid grid-cols-2 gap-kern-default sm:grid-cols-3">
@@ -574,6 +575,9 @@ ${spacing.map((step) => `<div class="flex items-center gap-kern-default"><span c
 		"radii-shadows": `<div class="flex flex-wrap gap-kern-large">
 ${radii.map((radius) => `<div class="flex flex-col items-center gap-kern-small"><span class="size-20 border-2 border-primary bg-muted rounded-${radius}"></span>${label(`rounded-${radius}`)}</div>`).join("\n")}
 ${shadows.map((shadow) => `<div class="flex flex-col items-center gap-kern-small"><span class="size-20 rounded-kern-default bg-background shadow-${shadow}"></span>${label(`shadow-${shadow}`)}</div>`).join("\n")}
+</div>`,
+		widths: `<div class="flex flex-wrap gap-kern-large">
+${widths.map((width) => `<div class="flex flex-col items-center gap-kern-small"><span class="size-20 rounded-kern-default border-primary bg-muted border-${width}"></span>${label(`border-${width}`)}</div>`).join("\n")}
 </div>`,
 	};
 }

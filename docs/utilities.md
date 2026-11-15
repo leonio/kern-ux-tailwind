@@ -51,6 +51,11 @@ Each sets font size, line height and weight together, as KERN's type classes do.
 | `text-kern-body`            | 18 / 24px          | 400    |            |
 | `text-kern-body-large`      | 21 / 32px          | 400    |            |
 | `text-kern-label`           | 18 / 24px          | 600    |            |
+| `text-kern-preline`         | 18 / 24px          | 400    |            |
+| `text-kern-subline`         | 18 / 24px          | 500    |            |
+| `text-kern-title-small`     | 18 / 24px          | 600    |            |
+| `text-kern-title`           | 21 / 24px          | 600    | 24 / 32px  |
+| `text-kern-title-large`     | 26 / 32px          | 600    | 32 / 40px  |
 | `text-kern-heading-small`   | 18 / 24px          | 600    |            |
 | `text-kern-heading-medium`  | 21 / 24px          | 600    | 24 / 32px  |
 | `text-kern-heading-large`   | 26 / 32px          | 600    | 32 / 40px  |
@@ -58,6 +63,10 @@ Each sets font size, line height and weight together, as KERN's type classes do.
 | `text-kern-heading-display` | 48 / 56px          | 500    | 72 / 80px  |
 
 <!-- site:type-roles -->
+
+The roles set type only. KERN's `kern-preline` and `kern-subline` also set the muted text colour, and KERN's type classes a small padding that keeps text on its baseline grid; add those where you want them, for example `text-kern-subline text-muted-foreground pt-(--kern-metric-baseline-subline-default-padding-top) pb-(--kern-metric-baseline-subline-default-padding-bottom)`.
+
+KERN's two weight modifiers are utilities as well: `font-kern-body-strong` (600), as KERN's `kern-body--bold`, and `font-kern-label-subtle` (400), as `kern-label--subtle`. Use them with a role: `text-kern-body font-kern-body-strong`.
 
 Tailwind's own sizes (`text-sm`, `text-base` …) stay as they are. KERN's smallest body text is 16px, so `text-sm` and `text-xs` are smaller than anything KERN uses.
 
@@ -72,18 +81,24 @@ Tailwind's own sizes (`text-sm`, `text-base` …) stay as they are. KERN's small
 
 Tailwind's spacing step is 4px, which is KERN's grid, so its numeric scale already matches KERN: `p-4` is KERN's `space-default`. The named steps read KERN's tokens and work with every spacing utility (`p-`, `m-`, `gap-`, `space-x-` …):
 
-| Utility           | KERN token                     | Value | Tailwind's equivalent |
-| ----------------- | ------------------------------ | ----- | --------------------- |
-| `p-kern-2x-small` | `--kern-metric-space-2x-small` | 2px   | `p-0.5`               |
-| `p-kern-x-small`  | `--kern-metric-space-x-small`  | 4px   | `p-1`                 |
-| `p-kern-small`    | `--kern-metric-space-small`    | 8px   | `p-2`                 |
-| `p-kern-default`  | `--kern-metric-space-default`  | 16px  | `p-4`                 |
-| `p-kern-large`    | `--kern-metric-space-large`    | 24px  | `p-6`                 |
-| `p-kern-x-large`  | `--kern-metric-space-x-large`  | 32px  | `p-8`                 |
-| `p-kern-2x-large` | `--kern-metric-space-2x-large` | 40px  | `p-10`                |
-| `p-kern-3x-large` | `--kern-metric-space-3x-large` | 48px  | `p-12`                |
-| `p-kern-4x-large` | `--kern-metric-space-4x-large` | 56px  | `p-14`                |
-| `p-kern-5x-large` | `--kern-metric-space-5x-large` | 64px  | `p-16`                |
+| Utility            | KERN token                      | Value | Tailwind's equivalent |
+| ------------------ | ------------------------------- | ----- | --------------------- |
+| `p-kern-2x-small`  | `--kern-metric-space-2x-small`  | 2px   | `p-0.5`               |
+| `p-kern-x-small`   | `--kern-metric-space-x-small`   | 4px   | `p-1`                 |
+| `p-kern-small`     | `--kern-metric-space-small`     | 8px   | `p-2`                 |
+| `p-kern-default`   | `--kern-metric-space-default`   | 16px  | `p-4`                 |
+| `p-kern-large`     | `--kern-metric-space-large`     | 24px  | `p-6`                 |
+| `p-kern-x-large`   | `--kern-metric-space-x-large`   | 32px  | `p-8`                 |
+| `p-kern-2x-large`  | `--kern-metric-space-2x-large`  | 40px  | `p-10`                |
+| `p-kern-3x-large`  | `--kern-metric-space-3x-large`  | 48px  | `p-12`                |
+| `p-kern-4x-large`  | `--kern-metric-space-4x-large`  | 56px  | `p-14`                |
+| `p-kern-5x-large`  | `--kern-metric-space-5x-large`  | 64px  | `p-16`                |
+| `p-kern-6x-large`  | `--kern-metric-space-6x-large`  | 80px  | `p-20`                |
+| `p-kern-7x-large`  | `--kern-metric-space-7x-large`  | 96px  | `p-24`                |
+| `p-kern-8x-large`  | `--kern-metric-space-8x-large`  | 112px | `p-28`                |
+| `p-kern-9x-large`  | `--kern-metric-space-9x-large`  | 128px | `p-32`                |
+| `p-kern-10x-large` | `--kern-metric-space-10x-large` | 160px | `p-40`                |
+| `p-kern-11x-large` | `--kern-metric-space-11x-large` | 192px | `p-48`                |
 
 <!-- site:spacing -->
 
@@ -101,6 +116,21 @@ Tailwind's spacing step is 4px, which is KERN's grid, so its numeric scale alrea
 <!-- site:radii-shadows -->
 
 KERN's shadows set their own colour, so Tailwind's shadow colour utilities (`shadow-red-500`) don't apply to them.
+
+## Border and outline widths
+
+KERN's border widths work with every border and outline width utility (`border-`, `border-t-`, `divide-x-`, `outline-` …):
+
+| Utility                                       | KERN token                           | Value | Tailwind's equivalent |
+| --------------------------------------------- | ------------------------------------ | ----- | --------------------- |
+| `border-kern-light`, `outline-kern-light`     | `--kern-metric-border-width-light`   | 1px   | `border`              |
+| `border-kern-default`, `outline-kern-default` | `--kern-metric-border-width-default` | 2px   | `border-2`            |
+| `border-kern-bold`, `outline-kern-bold`       | `--kern-metric-border-width-bold`    | 4px   | `border-4`            |
+| `border-kern-heavy`, `outline-kern-heavy`     | `--kern-metric-border-width-heavy`   | 8px   | `border-8`            |
+
+<!-- site:widths -->
+
+KERN's focus outline is `outline-kern-bold` in `outline-ring`, 2px from the element: `focus-visible:outline-kern-bold focus-visible:outline-offset-2 focus-visible:outline-ring`.
 
 ## Breakpoints
 
