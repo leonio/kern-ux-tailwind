@@ -114,11 +114,18 @@ const isBrand = (name: string) => name.startsWith("brand-colorpalette-");
 const isColor = (value: string) => !/^[\d.]+%?$/.test(value);
 /**
  * KERN 2.8 also defines --kern-color-color-action-state-indicator-default-
- * contextual, a misspelling of the token without the second "color-". A
- * utility on it would go away when KERN fixes the spelling, so it gets none:
- * the correctly spelt token has one.
+ * contextual, a misspelling of the token without the second "color-". Its
+ * utility reads the correctly spelt token instead, so it keeps working when
+ * KERN fixes the spelling. Without a correctly spelt twin, a name is mirrored
+ * as it is.
  */
-const isMisspelt = (name: string) => name.startsWith("color-");
+function correctSpelling(
+	name: string,
+	colors: Map<string, string>,
+): string | undefined {
+	const twin = name.replace(/^color-/, "");
+	return twin !== name && colors.has(twin) ? twin : undefined;
+}
 
 function lightness(oklch: string): number | undefined {
 	const match = /^oklch\(\s*([\d.]+)%/.exec(oklch);
@@ -136,10 +143,10 @@ const HEADER = `/*
 
 function tokensFile(colors: Map<string, string>): string {
 	const names = [...colors]
-		.filter(([name, value]) => isColor(value) && !isMisspelt(name))
+		.filter(([, value]) => isColor(value))
 		.map(([name]) => name);
 	const mirror = (name: string) =>
-		`--color-kern-${name}: var(--kern-color-${name});`;
+		`--color-kern-${name}: var(--kern-color-${correctSpelling(name, colors) ?? name});`;
 	return `${HEADER}
  * Every KERN colour token --kern-color-<name> as the Tailwind colour
  * kern-<name>: --kern-color-action-default-contextual is
