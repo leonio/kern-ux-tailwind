@@ -73,6 +73,8 @@ Each sets font size, line height and weight together, as KERN's type classes do.
 
 <!-- site:type-roles -->
 
+The roles set type only. KERN's `kern-preline` and `kern-subline` also set the muted text colour, and KERN's type classes a small padding that keeps text on its baseline grid; add those where you want them, for example `text-kern-subline text-muted-foreground pt-(--kern-metric-baseline-subline-default-padding-top) pb-(--kern-metric-baseline-subline-default-padding-bottom)`.
+
 KERN's two weight modifiers are utilities as well: `font-kern-body-strong` (600), as KERN's `kern-body--bold`, and `font-kern-label-subtle` (400), as `kern-label--subtle`. Use them with a role: `text-kern-body font-kern-body-strong`.
 
 Tailwind's own sizes (`text-sm`, `text-base` …) stay as they are. KERN's smallest body text is 16px, so `text-sm` and `text-xs` are smaller than anything KERN uses.
