@@ -1,8 +1,9 @@
 <h1 class="kern-heading-x-large">Side by side</h1>
 <p class="kern-body max-w-3xl">
 	Each row shows a component three ways: KERN's own markup, Tailwind utilities on KERN's tokens, and generic Tailwind
-	markup that hard-codes Tailwind's palette, which <code class="font-mono">remap.css</code> points at KERN. Switch the
-	theme at the top of the page to see all three follow it. The markup is in
+	markup that hard-codes Tailwind's palette, which <code class="font-mono">remap.css</code> points at KERN. KERN has no
+	sidebar, so that row shows shadcn/ui's sidebar colours on their own. Switch the theme at the top of the page to see
+	every row follow it. The markup is in
 	<a class="kern-link" href="https://github.com/leonio/kern-ux-tailwind/blob/main/site/pages/demo.html">site/pages/demo.html</a>.
 </p>
 
@@ -66,9 +67,9 @@
 			<div class="flex flex-col gap-kern-small">
 				<p class="text-kern-body-small text-muted-foreground">Tailwind on KERN tokens</p>
 				<!-- markup Tailwind on KERN tokens -->
-				<div class="flex items-center gap-kern-small rounded-kern-default bg-kern-feedback-info-background-contextual p-kern-default outline-2 outline-kern-feedback-info-contextual" role="alert">
+				<div class="flex items-center gap-kern-small rounded-kern-default bg-kern-feedback-info-background-contextual p-kern-default outline-kern-default outline-kern-feedback-info-contextual" role="alert">
 					<span class="kern-icon kern-icon--info bg-kern-feedback-info-contextual" aria-hidden="true"></span>
-					<p class="text-kern-heading-medium">Your application was saved</p>
+					<p class="text-kern-title">Your application was saved</p>
 				</div>
 				<!-- /markup -->
 			</div>
@@ -100,8 +101,8 @@
 				<p class="text-kern-body-small text-muted-foreground">Tailwind on KERN tokens</p>
 				<!-- markup Tailwind on KERN tokens -->
 				<div class="flex flex-wrap gap-kern-small">
-					<span class="inline-flex min-h-8 items-center rounded-kern-default border border-kern-feedback-success-contextual bg-kern-feedback-success-background-contextual pr-kern-default pl-3 text-kern-body-small font-semibold">Approved</span>
-					<span class="inline-flex min-h-8 items-center rounded-kern-default border border-kern-feedback-warning-contextual bg-kern-feedback-warning-background-contextual pr-kern-default pl-3 text-kern-body-small font-semibold">Pending</span>
+					<span class="inline-flex min-h-8 items-center rounded-kern-default border-kern-light border-kern-feedback-success-contextual bg-kern-feedback-success-background-contextual pr-kern-default pl-3 text-kern-body-small font-semibold">Approved</span>
+					<span class="inline-flex min-h-8 items-center rounded-kern-default border-kern-light border-kern-feedback-warning-contextual bg-kern-feedback-warning-background-contextual pr-kern-default pl-3 text-kern-body-small font-semibold">Pending</span>
 				</div>
 				<!-- /markup -->
 			</div>
@@ -138,9 +139,9 @@
 				<p class="text-kern-body-small text-muted-foreground">Tailwind on KERN tokens</p>
 				<!-- markup Tailwind on KERN tokens -->
 				<label class="text-kern-label" for="tw-name">Name</label>
-				<input class="h-12 w-full rounded-kern-small border-b-2 border-input bg-muted px-kern-default text-kern-body focus:outline-kern-bold focus:outline-ring" id="tw-name" name="tw-name" type="text" />
+				<input class="h-12 w-full rounded-kern-small border-b-kern-default border-input bg-muted px-kern-default text-kern-body focus:outline-kern-bold focus:outline-ring" id="tw-name" name="tw-name" type="text" />
 				<label class="text-kern-label" for="tw-notes">Notes</label>
-				<textarea class="min-h-24 w-full rounded-kern-small border-b-2 border-input bg-muted px-kern-default py-kern-small text-kern-body focus:outline-kern-bold focus:outline-ring" id="tw-notes" name="tw-notes"></textarea>
+				<textarea class="min-h-24 w-full rounded-kern-small border-b-kern-default border-input bg-muted px-kern-default py-kern-small text-kern-body focus:outline-kern-bold focus:outline-ring" id="tw-notes" name="tw-notes"></textarea>
 				<!-- /markup -->
 			</div>
 			<div class="flex flex-col gap-kern-small">
@@ -181,7 +182,7 @@
 				<p class="text-kern-body-small text-muted-foreground">Tailwind on KERN tokens</p>
 				<!-- markup Tailwind on KERN tokens -->
 				<article class="flex flex-col gap-kern-default rounded-kern-default border border-border bg-card p-kern-large text-card-foreground">
-					<h3 class="text-kern-heading-medium" id="tw-card-title">Parking permit</h3>
+					<h3 class="text-kern-title" id="tw-card-title">Parking permit</h3>
 					<p class="text-kern-body">Apply for a residents' parking permit online.</p>
 					<div class="pt-kern-default">
 						<button type="button" class="inline-flex min-h-12 items-center rounded-kern-default bg-primary px-kern-large text-kern-label text-primary-foreground hover:bg-kern-action-state-indicator-shade-hover focus-visible:outline-kern-bold focus-visible:outline-offset-2 focus-visible:outline-ring" aria-describedby="tw-card-title">
@@ -207,11 +208,109 @@
 		<!-- markup-panel -->
 	</section>
 
+	<section class="flex flex-col gap-kern-default" aria-labelledby="type">
+		<h2 id="type" class="text-kern-heading-medium">Preline, title and subline</h2>
+		<div class="grid gap-kern-large lg:grid-cols-3">
+			<div class="flex flex-col gap-kern-small">
+				<p class="text-kern-body-small text-muted-foreground">KERN</p>
+				<!-- markup KERN -->
+				<hgroup>
+					<p class="kern-preline">Residents' services</p>
+					<h3 class="kern-title">Parking permit</h3>
+					<p class="kern-subline">Apply online in ten minutes</p>
+				</hgroup>
+				<p class="kern-body">Have your <strong class="kern-body--bold">vehicle registration</strong> to hand.</p>
+				<!-- /markup -->
+			</div>
+			<div class="flex flex-col gap-kern-small">
+				<p class="text-kern-body-small text-muted-foreground">Tailwind on KERN tokens</p>
+				<!-- markup Tailwind on KERN tokens -->
+				<hgroup>
+					<p class="pt-(--kern-metric-baseline-preline-default-padding-top) pb-(--kern-metric-baseline-preline-default-padding-bottom) text-kern-preline text-muted-foreground">Residents' services</p>
+					<h3 class="pt-(--kern-metric-baseline-title-default-padding-top) pb-(--kern-metric-baseline-title-default-padding-bottom) text-kern-title">Parking permit</h3>
+					<p class="pt-(--kern-metric-baseline-subline-default-padding-top) pb-(--kern-metric-baseline-subline-default-padding-bottom) text-kern-subline text-muted-foreground">Apply online in ten minutes</p>
+				</hgroup>
+				<p class="text-kern-body">Have your <strong class="font-kern-body-strong">vehicle registration</strong> to hand.</p>
+				<!-- /markup -->
+			</div>
+			<div class="flex flex-col gap-kern-small">
+				<p class="text-kern-body-small text-muted-foreground">Tailwind palette, remapped</p>
+				<!-- markup Tailwind palette, remapped -->
+				<hgroup>
+					<p class="text-sm/6 font-semibold text-indigo-600 dark:text-indigo-400">Residents' services</p>
+					<h3 class="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">Parking permit</h3>
+					<p class="mt-1 text-base text-gray-600 dark:text-gray-400">Apply online in ten minutes</p>
+				</hgroup>
+				<p class="text-sm text-gray-600 dark:text-gray-400">Have your <strong class="font-semibold text-gray-900 dark:text-white">vehicle registration</strong> to hand.</p>
+				<!-- /markup -->
+			</div>
+		</div>
+		<!-- markup-panel -->
+	</section>
+
+	<section class="flex flex-col gap-kern-default" aria-labelledby="sidebar">
+		<h2 id="sidebar" class="text-kern-heading-medium">Sidebar</h2>
+		<div class="grid gap-kern-large lg:grid-cols-3">
+			<div class="flex flex-col gap-kern-small">
+				<p class="text-kern-body-small text-muted-foreground">shadcn/ui's sidebar colours</p>
+				<!-- markup shadcn/ui's sidebar colours -->
+				<nav class="flex w-64 max-w-full flex-col gap-kern-small rounded-kern-default border border-sidebar-border bg-sidebar p-kern-small text-sidebar-foreground" aria-label="Services">
+					<div class="flex items-center gap-kern-small p-kern-small">
+						<span class="flex size-8 items-center justify-center rounded-kern-default bg-sidebar-primary text-kern-label text-sidebar-primary-foreground" aria-hidden="true">B</span>
+						<span class="text-kern-label">Bürgerportal</span>
+					</div>
+					<ul class="flex flex-col gap-kern-x-small">
+						<li><a class="flex min-h-10 items-center rounded-kern-default bg-sidebar-accent px-kern-small text-kern-body-small font-kern-body-strong text-sidebar-accent-foreground focus-visible:outline-kern-bold focus-visible:outline-sidebar-ring" href="#sidebar" aria-current="page">Overview</a></li>
+						<li><a class="flex min-h-10 items-center rounded-kern-default px-kern-small text-kern-body-small hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-kern-bold focus-visible:outline-sidebar-ring" href="#sidebar">Parking permit</a></li>
+						<li><a class="flex min-h-10 items-center justify-between rounded-kern-default px-kern-small text-kern-body-small hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-kern-bold focus-visible:outline-sidebar-ring" href="#sidebar">Mailbox <span class="rounded-kern-small bg-muted px-kern-x-small text-muted-foreground">3</span></a></li>
+					</ul>
+				</nav>
+				<!-- /markup -->
+			</div>
+			<div class="flex flex-col gap-kern-small">
+				<p class="text-kern-body-small text-muted-foreground">The same, on kern-level-1</p>
+				<!-- markup The same, on kern-level-1 -->
+				<nav class="kern-level-1 flex w-64 max-w-full flex-col gap-kern-small rounded-kern-default border border-sidebar-border bg-sidebar p-kern-small text-sidebar-foreground" aria-label="Services, kern-level-1">
+					<div class="flex items-center gap-kern-small p-kern-small">
+						<span class="flex size-8 items-center justify-center rounded-kern-default bg-sidebar-primary text-kern-label text-sidebar-primary-foreground" aria-hidden="true">B</span>
+						<span class="text-kern-label">Bürgerportal</span>
+					</div>
+					<ul class="flex flex-col gap-kern-x-small">
+						<li><a class="flex min-h-10 items-center rounded-kern-default bg-sidebar-accent px-kern-small text-kern-body-small font-kern-body-strong text-sidebar-accent-foreground focus-visible:outline-kern-bold focus-visible:outline-sidebar-ring" href="#sidebar" aria-current="page">Overview</a></li>
+						<li><a class="flex min-h-10 items-center rounded-kern-default px-kern-small text-kern-body-small hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-kern-bold focus-visible:outline-sidebar-ring" href="#sidebar">Parking permit</a></li>
+						<li><a class="flex min-h-10 items-center justify-between rounded-kern-default px-kern-small text-kern-body-small hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-kern-bold focus-visible:outline-sidebar-ring" href="#sidebar">Mailbox <span class="rounded-kern-small bg-muted px-kern-x-small text-muted-foreground">3</span></a></li>
+					</ul>
+				</nav>
+				<!-- /markup -->
+			</div>
+		</div>
+		<!-- markup-panel -->
+	</section>
+
 	<section class="flex flex-col gap-kern-default rounded-kern-large bg-background p-kern-large text-foreground" data-kern-theme="dark" aria-labelledby="island">
 		<h2 id="island" class="text-kern-heading-medium">A dark section in any theme</h2>
 		<p class="max-w-3xl text-kern-body">
 			<code class="font-mono">data-kern-theme="dark"</code> on this section switches KERN's tokens here only. The token
 			utilities follow because <code class="font-mono">@theme inline</code> compiles them to KERN's variables.
+		</p>
+		<div class="flex flex-wrap gap-kern-default">
+			<button type="button" class="kern-btn kern-btn--primary"><span class="kern-label">KERN</span></button>
+			<button type="button" class="inline-flex min-h-12 items-center rounded-kern-default bg-primary px-kern-large text-kern-label text-primary-foreground">
+				Tailwind on KERN tokens
+			</button>
+			<button type="button" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs dark:bg-indigo-400 dark:text-gray-950">
+				Tailwind palette, remapped
+			</button>
+		</div>
+	</section>
+
+	<section class="flex flex-col gap-kern-default rounded-kern-large bg-background p-kern-large text-foreground" data-kern-theme="light" aria-labelledby="light-island">
+		<h2 id="light-island" class="text-kern-heading-medium">A light section in any theme</h2>
+		<p class="max-w-3xl text-kern-body">
+			<code class="font-mono">data-kern-theme="light"</code> keeps this section light on a dark page. KERN's components and
+			the token utilities follow it. The palette button's <code class="font-mono">dark:</code> pair doesn't: on a dark page
+			it still matches here, as <a class="kern-link" href="../docs/limits.html">Limits</a> explains, so it keeps its dark
+			colours.
 		</p>
 		<div class="flex flex-wrap gap-kern-default">
 			<button type="button" class="kern-btn kern-btn--primary"><span class="kern-label">KERN</span></button>
